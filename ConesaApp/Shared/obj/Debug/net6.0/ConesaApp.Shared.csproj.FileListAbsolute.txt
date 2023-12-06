@@ -1,0 +1,12 @@
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\bin\Debug\net6.0\ConesaApp.Shared.deps.json
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\bin\Debug\net6.0\ConesaApp.Shared.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\bin\Debug\net6.0\ConesaApp.Shared.pdb
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.csproj.AssemblyReference.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.AssemblyInfoInputs.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.AssemblyInfo.cs
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.csproj.CoreCompileInputs.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\refint\ConesaApp.Shared.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ConesaApp.Shared.pdb
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\Shared\obj\Debug\net6.0\ref\ConesaApp.Shared.dll

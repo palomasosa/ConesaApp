@@ -1,0 +1,81 @@
+﻿@using ConesaApp.Client.Pages.Services
+@using ConesaApp.Database.Data.Entities
+
+@inject IHttpService http
+@page "/Inicio/Pagos"
+
+    <div class="mainContainer">
+        <table class="table">
+          <tr>
+            <th>Vendedor</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Cliente</th>
+            <th>Patente</th>
+            <th>N° de Póliza</th>
+          </tr>
+          @foreach (Pago p in pagos)
+         {
+             <tr>
+               <td>@p.Usuario.Nombre @p.Usuario.Apellido</td>
+               <td>@p.Fecha.ToShortDateString()</td>
+               <td>$@p.Monto</td>
+               <td>@p.Cliente.Nombre @p.Cliente.Apellido</td>
+               <td>@p.Poliza.Vehiculo.Patente</td>
+               <td>@p.Poliza.NroPoliza</td>
+            </tr>
+         }
+        </table>
+    </div>
+
+@code {
+    [Parameter]
+    public string Busqueda { get; set; }
+
+    List<Pago> pagos = new List<Pago>();
+    Vehiculo vehiculo = new Vehiculo();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await readPagos();
+    }
+    private async Task readPagos()
+    {
+        var respuesta = await http.Get<List<Pago>>($"/Pagos");
+        if (!respuesta.Error)
+        {
+            pagos = respuesta.Respuesta;
+        }
+    }
+
+    private async Task readVehiculoPorPoliza(int poliza)
+    {
+        var respuesta = await http.Get<Vehiculo>($"/VehiculoPoliza/{poliza}");
+        if (!respuesta.Error)
+        {
+            vehiculo = respuesta.Respuesta;
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        if (!String.IsNullOrEmpty(Busqueda))
+        {
+            var respuesta = await http.Get<List<Pago>>($"/Pagos/Busqueda?query={Busqueda}");
+                if (!respuesta.Error)
+                {
+                    pagos = respuesta.Respuesta;
+                }
+        }
+        else if (String.IsNullOrEmpty(Busqueda))
+        {
+            var respuesta = await http.Get<List<Pago>>($"/Pagos");
+            if (!respuesta.Error)
+            {
+                pagos = respuesta.Respuesta;
+            }
+        }
+    }
+}

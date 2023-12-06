@@ -1,0 +1,31 @@
+.mainContainer[b-0ophteuo75] {
+    height: 100%;
+    width: 100%;
+    background-color: #FCFCF4;
+    border-radius: 15px;
+    padding: 5px;
+}
+.table[b-0ophteuo75] {
+    width:100%;
+    text-align: center;
+}
+    .table tr[b-0ophteuo75] {
+        background-color: #141C6C;
+        color: #FFFFFF;
+        height: 40px;
+    }
+    .table td[b-0ophteuo75] {
+        background-color: #FFFFFF;
+        color: #141C6C;
+    }
+
+ .btnMostrar[b-0ophteuo75] {
+        height: 28px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        border: none;
+        border-radius: 10px;
+        background-color: #5F658E;
+        color: white;
+    }

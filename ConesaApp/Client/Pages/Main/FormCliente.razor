@@ -1,0 +1,73 @@
+﻿@using ConesaApp.Database.Data.Entities
+@using ConesaApp.Client.Pages.Services
+@inject IHttpService http
+
+<h3>Datos personales</h3>
+<EditForm Model="cliente">
+    <div class="inputContainer">
+        <label>Nombre</label>
+        <InputText @bind-Value="@cliente.Nombre"/>
+    </div>
+    <div class="inputContainer">
+        <label>Nombre</label>
+        <InputText @bind-Value="@cliente.Ciudad" placeholder="Ciudad"/>
+    </div>
+    <div class="inputContainer">
+        <label>Nombre</label>
+        <InputText @bind-Value="@cliente.Direccion"/>
+    </div>
+    <div class="inputContainer">
+        <label>Nombre</label>
+        <InputText @bind-Value="@cliente.Telefono"/>
+    </div>
+</EditForm>
+<h3>Datos del vehículo</h3>
+<EditForm Model="vehiculo">
+    <div class="inputContainer">
+        <label>Patente</label>
+        <InputText @bind-Value="@vehiculo.Patente"/>
+    </div>
+    <div class="inputContainer">
+        <label>Marca</label>
+        <InputText @bind-Value="@vehiculo.Marca"/>
+    </div>
+    <div class="inputContainer">
+        <label>Año</label>
+        <InputNumber @bind-Value="@vehiculo.Año"/>
+    </div>
+</EditForm>
+<h3>Datos de la póliza</h3>
+<EditForm Model="poliza">
+    <div>
+        <label>Empresa</label>
+        <select name="empresas" id="empresas-select" @bind="poliza.Empresa"> 
+          <option value="">Empresas</option>
+          @foreach (Empresa empresa in empresas)
+          {
+              <option value="@empresa.Nombre">@empresa.Nombre</option>
+          }
+        </select>
+    </div>
+    
+
+</EditForm>
+@code {
+    [Parameter] public Cliente cliente { get; set; }
+    [Parameter] public Vehiculo vehiculo { get; set; }
+    [Parameter] public Poliza poliza { get; set; }
+    public List<Empresa> empresas;
+
+
+    protected override async void OnInitialized()
+    {
+        await readEmpresas();
+    }
+    private async Task readEmpresas()
+    {
+        var respuesta = await http.Get<List<Empresa>>($"/Empresas");
+        if (!respuesta.Error)
+        {
+            empresas = respuesta.Respuesta;
+        }
+    }
+}

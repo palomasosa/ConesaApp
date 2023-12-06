@@ -1,0 +1,28 @@
+.buscador[b-4jihwlmx48] {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 15px;
+    width: 30%;
+    height: 5vh;
+    background-color: #ACA4CC;
+}
+.inputBusqueda[b-4jihwlmx48] {
+    width: 90%;
+    height: 100%;
+    border: none;
+    background-color: #ACA4CC;
+    border-radius: 10px;
+    outline: none;
+    padding: 15px;
+    color: #FFFFFF;
+}
+.btnLupa[b-4jihwlmx48]
+{
+    border: none;
+    background: none;
+}
+
+[b-4jihwlmx48]::placeholder {
+    color: #FFFFFF;
+    opacity: 1; 
+}
