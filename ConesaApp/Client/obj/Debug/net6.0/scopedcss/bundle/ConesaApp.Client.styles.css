@@ -1,3 +1,35 @@
+/* /Pages/Main/ClienteNuevo.razor.rz.scp.css */
+.card[b-trf8nhfqob] {
+    left: 260px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    width: 60%;
+    align-items: flex-start;
+    height: 450px;
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    -moz-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+}
+
+svg[b-trf8nhfqob] {
+    align-self: flex-end;
+}
+
+.container[b-trf8nhfqob] {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.datosCliente[b-trf8nhfqob],
+.datosVehiculo[b-trf8nhfqob],
+.datosPoliza[b-trf8nhfqob] {
+    width: 30%; /* Ajusta el ancho según sea necesario */
+}
 /* /Pages/Main/Clientes.razor.rz.scp.css */
 .mainContainer[b-0ophteuo75] {
     height: 100%;
@@ -30,6 +62,38 @@
         background-color: #5F658E;
         color: white;
     }
+/* /Pages/Main/FormCliente.razor.rz.scp.css */
+.card[b-3r4g4zqtza] {
+    left: 260px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    width: 60%;
+    align-items: flex-start;
+    height: 450px;
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    -moz-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+}
+
+svg[b-3r4g4zqtza] {
+    align-self: flex-end;
+}
+
+.container[b-3r4g4zqtza] {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.datosCliente[b-3r4g4zqtza],
+.datosVehiculo[b-3r4g4zqtza],
+.datosPoliza[b-3r4g4zqtza] {
+    width: 30%; /* Ajusta el ancho según sea necesario */
+}
 /* /Pages/Main/Pagos.razor.rz.scp.css */
 .mainContainer[b-bl8vr66mtu] {
     margin-top: 64px;

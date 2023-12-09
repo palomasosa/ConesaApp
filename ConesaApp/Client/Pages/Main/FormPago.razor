@@ -1,0 +1,191 @@
+﻿@using ConesaApp.Database.Data.Entities
+@using ConesaApp.Client.Pages.Services
+@inject IHttpService http
+
+
+<h3>Nuevo Pago</h3>
+
+<EditForm Model="pagos">
+    <h3>Datos del vendedor</h3>
+    <div class="inputContainer">
+        <label>Vendedor</label>
+        <select name="usuarios" id="usuarios-select" @bind="pagos.UsuarioID" placeholder="Vendedor">
+            <option value="">Usuarios</option>
+            @if (usuarios.Count > 0)
+            {
+                @foreach (Usuario usuario in usuarios)
+                {
+                    <option value="@usuario.UsuarioID">@usuario.Nombre</option>
+                }
+            }
+        </select>
+    </div>
+
+    <h3>Datos del pago</h3>
+    <div class="inputContainer">
+        <label>Fecha</label>
+        <InputDate class="form-control" @bind-Value="pagos.Fecha" />
+    </div>
+    <div class="inputContainer">
+        <label>Monto</label>
+        <InputNumber class="form-control" @bind-Value="pagos.Monto" />
+    </div>
+
+
+    <div class="inputConteiner">
+        <label>Cliente</label>
+        <input @oninput="@(e => filtrarClientes(e.Value.ToString()))" type="text" list="clientes-select" @bind="pagos.ClienteID" placeholder="Cliente" />
+        <datalist name="clientes" id="clientes-select">
+            <option value="">Clientes</option>
+            @if (clientes != null && clientes.Count > 0)
+            {
+                @foreach (Cliente cliente in clientes)
+                {
+                    <option value="@cliente.ClienteID">@cliente.Nombre @cliente.Apellido</option>
+                }
+            }
+        </datalist>
+        <button class="btn btn-primary" type="button" id="btnClienteSeleccionado" @onclick="async () => await ClienteSeleccionado()">Seleccionar Cliente</button>
+    </div>
+</EditForm>
+
+<EditForm Model="vehiculo">
+    <h3>Datos del vehiculo</h3>
+    <div class="inputContainer">
+        <label>Patente</label>
+        <select name="patente" @bind="vehiculo.Patente" placeholder="Vehiculo">
+            @if (vehiculos.Count > 0)
+            {
+                @foreach (Vehiculo v in vehiculos)
+                {
+                    <option value="@v.Patente">@v.Patente</option>
+                }
+            }
+            else
+            { 
+                <option value="">No hay vehículos disponibles</option>
+            }
+        </select>
+    </div>
+
+   @*  <div class="inputContainer">
+        <label>Nro Poliza</label>
+        <input @bind="vehiculo.Poliza.NroPoliza" />
+    </div>  *@
+
+    <button class="btn btn-primary" type="submit" id="btnGuardar">Agregar</button>
+
+</EditForm>
+@code {
+    // [Parameter] public Usuario usuario { get; set; }
+    // [Parameter] public Clientes cliente { get; set; }
+    // [Parameter] public Poliza poliza { get; set; }
+    public Vehiculo vehiculo = new Vehiculo(); 
+    public Pago pagos = new Pago();
+    public List<Usuario> usuarios = new List<Usuario>();
+    public List<Cliente> clientes = new List<Cliente>();
+    public List<Vehiculo> vehiculos = new List<Vehiculo>();
+    
+
+
+
+    //public List<Cliente> clientesFiltrados = new List<Cliente>();
+
+    public FormPago()
+    {
+        usuarios = new List<Usuario>();
+        clientes = new List<Cliente>();
+        vehiculos = new List<Vehiculo>();
+    }
+
+    protected override async void OnInitialized()
+    {
+        pagos.Fecha = DateTime.Now.Date;
+        await readUsuarios();
+        await readClientes();
+
+    }
+
+    private async Task readUsuarios()
+    {
+        var respuesta = await http.Get<List<Usuario>>("/Usuarios");
+        if (!respuesta.Error)
+        {
+            usuarios = respuesta.Respuesta;
+        }
+    }
+
+    private async Task readClientes()
+    {
+        var respuesta = await http.Get<List<Cliente>>("/Clientes");
+        if (!respuesta.Error)
+        {
+            clientes = respuesta.Respuesta;
+        }
+    }
+
+    public async void filtrarClientes(string filtro)
+    {
+        if (!string.IsNullOrWhiteSpace(filtro))
+        {
+            var respuesta = await http.Get<List<Cliente>>($"/Clientes/Filtro?query={filtro}");
+            clientes = respuesta.Respuesta;
+        }
+        else
+        {
+            clientes = new List<Cliente>();
+        }
+    }
+
+    private async Task ClienteSeleccionado()
+    {
+        if (pagos.ClienteID > 0)
+        {
+            var respuestaVehiculos = await http.Get<List<Vehiculo>>($"{pagos.ClienteID}/Vehiculos");
+            vehiculos = respuestaVehiculos.Respuesta;
+
+            if (!respuestaVehiculos.Error)
+            {
+                vehiculos = respuestaVehiculos.Respuesta;
+            }
+        }
+    }
+
+    private async Task ObtenerPolizaPorVehiculo(string patente)
+    {
+        var respuestaPoliza = await http.Get<Poliza>($"/polizaVehiculo/{patente}");
+
+        if (!respuestaPoliza.Error)
+        {
+            vehiculo.Poliza = respuestaPoliza.Respuesta;
+        }
+        else
+        {
+            Console.WriteLine($"Error al obtener la póliza: {respuestaPoliza.HttpResponseMessage}");
+        }
+    }
+
+    private async void Grabar()
+    {
+        try
+        {
+            var respuestaPago = await http.Post<Pago>("api/Pago", pagos);
+
+            if (!respuestaPago.Error)
+            {
+                var nuevoPago = respuestaPago.Respuesta;
+                //Limpia formulario
+                pagos = new Pago();
+                vehiculo = new Vehiculo();
+            }
+            else
+            {
+                Console.WriteLine($"Error al crear el pago: {respuestaPago.HttpResponseMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al procesar la solicitud: {ex.Message}");
+        }
+    }
+}

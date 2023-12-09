@@ -1,0 +1,17 @@
+﻿@using ConesaApp.Client
+@using ConesaApp.Database.Data.Entities;
+@using ConesaApp.Client.Pages.Services;
+@inject IHttpService http
+
+<h3>Nuevo Cliente</h3>
+
+<FormPago 
+    />
+
+@code {
+    private Usuario usuario = new Usuario();
+    private Pago pagos = new Pago();
+    List<Vehiculo> vehiculo;
+    List<Cliente> cliente;
+}
+

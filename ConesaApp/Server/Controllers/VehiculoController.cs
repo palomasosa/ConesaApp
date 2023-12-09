@@ -145,6 +145,29 @@ namespace ConesaApp.Server.Controllers
         }
 
 
+
+        [HttpGet("/polizaVehiculo/{patente}")]
+        public IActionResult ObtenerPolizaPorVehiculo(string patente)
+        {
+            try
+            {
+                var vehiculo = _dbContext.Vehiculos.Include(v => v.Poliza).FirstOrDefault(v => v.Patente == patente);
+
+                if (vehiculo != null && vehiculo.Poliza != null)
+                {
+                    return Ok(vehiculo.Poliza);
+                }
+                else
+                {
+                    return NotFound("No se encontró la póliza para el vehículo especificado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al obtener la póliza: {ex.Message}");
+            }
+        }
+
         #endregion
 
         [HttpPost]
@@ -154,7 +177,6 @@ namespace ConesaApp.Server.Controllers
             {
                 _dbContext.Vehiculos.Add(vehiculo);
                 await _dbContext.SaveChangesAsync();
-                //Aca nos devuelve el cliente recién creado
                 return vehiculo.VehiculoID;
             }
             catch (Exception err)

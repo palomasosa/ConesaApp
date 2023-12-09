@@ -13,6 +13,7 @@ namespace ConesaApp.Database.Data.Entities
         public int PolizaID { get; set; }
         public Poliza Poliza { get; set; }
         public int ClienteID { get; set; }
+        //public string Nombre { get; set; }
         public Cliente Cliente { get; set; }
         public int UsuarioID { get; set; }
         public Usuario Usuario { get; set; }

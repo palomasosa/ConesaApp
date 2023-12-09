@@ -1,0 +1,38 @@
+﻿@using ConesaApp.Database.Data.Entities
+@using ConesaApp.Client.Pages.Services
+@inject IHttpService http
+
+ <div class="datosCliente">
+        <EditForm Model="cliente">
+            <h3>Datos personales</h3>
+            <div class="inputContainer">
+                <label>Nombre</label>
+                <InputText @bind-Value="@cliente.Nombre" placeholder="Nombre" />
+            </div>
+            <div class="inputContainer">
+                <label>Apellido</label>
+                <InputText @bind-Value="@cliente.Apellido" placeholder="Apellido" />
+            </div>
+            <div class="inputContainer">
+                <label>Ciudad</label>
+                <InputText @bind-Value="@cliente.Ciudad" placeholder="Ciudad" />
+            </div>
+            <div class="inputContainer">
+                <label>Direccion</label>
+                <InputText @bind-Value="@cliente.Direccion" placeholder="Direccion" />
+            </div>
+            <div class="inputContainer">
+                <label>Telefono</label>
+                <InputText @bind-Value="@cliente.Telefono" placeholder="Telefono" />
+            </div>
+            <div class="inputContainer">
+                <label>Emial</label>
+                <InputText @bind-Value="@cliente.Mail" placeholder="Email" />
+            </div>
+        </EditForm>
+    </div>
+
+@code{
+    [Parameter] public Cliente Cliente { get; set; }
+    public Cliente cliente = new Cliente();
+}

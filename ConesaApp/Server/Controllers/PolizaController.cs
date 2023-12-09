@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using ConesaApp.Database.Data.Entities;
 using ConesaApp.Database.Data;
 
@@ -50,7 +49,7 @@ namespace ConesaApp.Server.Controllers
             return Ok(poliza);
         }
 
-        [HttpPost]
+        [HttpPost("/poliza/ID")]
         public async Task<ActionResult<int>> PostPoliza(Poliza poliza)
         {
             try

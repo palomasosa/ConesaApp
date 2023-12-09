@@ -1,0 +1,28 @@
+﻿@using ConesaApp.Database.Data.Entities
+@using ConesaApp.Client.Pages.Services
+@inject IHttpService http
+
+
+<div class="datosVehiculo">
+    <EditForm Model="vehiculo">
+        <h3>Datos del vehículo </h3>
+
+        <div class="inputContainer">
+            <label>Patente</label>
+            <InputText @bind-Value="@vehiculo.Patente" placeholder="Patente" />
+        </div>
+        <div class="inputContainer">
+            <label>Modelo</label>
+            <InputText @bind-Value="@vehiculo.Marca" placeholder="Modelo" />
+        </div>
+        <div class="inputContainer">
+            <label>Año</label>
+            <InputNumber @bind-Value="@vehiculo.Año" placeholder="Año" />
+        </div>
+    </EditForm>
+</div>
+@code {
+    [Parameter] public Vehiculo Vehiculo { get; set; }
+    public Vehiculo vehiculo = new Vehiculo();
+
+}

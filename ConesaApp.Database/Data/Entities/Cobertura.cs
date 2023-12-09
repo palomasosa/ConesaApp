@@ -8,6 +8,6 @@ namespace ConesaApp.Database.Data.Entities
     {
         [Key] public int CoberturaID { get; set; }
         public string Tipo { get; set; }
-        public virtual List<Poliza> Polizas { get; set; }
+       public virtual List<Poliza> Polizas { get; set; }
     }
 }

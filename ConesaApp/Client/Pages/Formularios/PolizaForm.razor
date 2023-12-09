@@ -1,0 +1,95 @@
+﻿@using ConesaApp.Database.Data.Entities
+@using ConesaApp.Client.Pages.Services
+@inject IHttpService http
+
+<div class="datosPoliza">
+    <EditForm Model="poliza">
+        <h3>Datos de la póliza</h3>
+
+        <div class="inputContainer">
+            <label>Nro Poliza</label>
+            <InputNumber @bind-Value="@poliza.NroPoliza" placeholder="Nro Poliza" />
+        </div>
+        <div class="inputContainer">
+            <label>Vigencia Poliza</label>
+            <InputDate class="form-control" @bind-Value="poliza.InicioVigencia" placeholder="Inicio Vigencia" />
+        </div>
+        <div class="inputContainer">
+            <label>Fin Vigencia</label>
+            <InputDate class="form-control" @bind-Value="poliza.FinVigencia" placeholder="Fin Vigencia" />
+        </div>
+        <div class="inputContainer">
+            <label>Valor Cuota</label>
+            <InputNumber class="form-control" @bind-Value="poliza.ValorCuota" placeholder="Valor Cuota" />
+        </div>
+        <div class="inputContainer">
+            <label>Valor Asegurado</label>
+            <InputNumber class="form-control" @bind-Value="poliza.ValorAsegurado" placeholder="Valor asegurado" />
+        </div>
+
+        <div class="inputContainer">
+            <label>Empresa</label>
+            <select name="empresas" id="empresas-select" @bind="poliza.EmpresaID">
+                <option value="">Empresas</option>
+                @if (empresas.Count > 0)
+                {
+                    @foreach (Empresa empresa in empresas)
+                    {
+                        <option value="@empresa.EmpresaID">@empresa.Nombre</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="inputContainer">
+            <label>Tipo cobertura</label>
+            <div>
+                <select name="coberturas" id="corturas-select" @bind="poliza.CoberturaID">
+                    <option value="">Coberturas</option>
+                    @if (coberturas.Count > 0)
+                    {
+                        @foreach (Cobertura cobertura in coberturas)
+                        {
+                            <option value="@cobertura.CoberturaID">@cobertura.Tipo</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    public Poliza poliza = new Poliza();
+    public List<Empresa> empresas = new List<Empresa>();
+    public List<Cobertura> coberturas = new List<Cobertura>();
+    [Parameter] public Poliza Poliza { get; set; }
+
+    private async Task readEmpresas()
+    {
+        var respuesta = await http.Get<List<Empresa>>("/Empresas");
+        if (!respuesta.Error)
+        {
+            empresas = respuesta.Respuesta;
+        }
+    }
+
+
+    private async Task readCobertura()
+    {
+        var respuesta = await http.Get<List<Cobertura>>("/Coberturas");
+        if (!respuesta.Error)
+        {
+            coberturas = respuesta.Respuesta;
+        }
+    }
+
+    protected override async void OnInitialized()
+    {
+        await readEmpresas();
+        await readCobertura();
+        //  fecha actual
+        poliza.InicioVigencia = DateTime.Now.Date;
+        poliza.FinVigencia = DateTime.Now.Date;
+    }
+}

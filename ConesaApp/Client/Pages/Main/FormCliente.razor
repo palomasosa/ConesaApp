@@ -2,72 +2,305 @@
 @using ConesaApp.Client.Pages.Services
 @inject IHttpService http
 
-<h3>Datos personales</h3>
-<EditForm Model="cliente">
-    <div class="inputContainer">
-        <label>Nombre</label>
-        <InputText @bind-Value="@cliente.Nombre"/>
-    </div>
-    <div class="inputContainer">
-        <label>Nombre</label>
-        <InputText @bind-Value="@cliente.Ciudad" placeholder="Ciudad"/>
-    </div>
-    <div class="inputContainer">
-        <label>Nombre</label>
-        <InputText @bind-Value="@cliente.Direccion"/>
-    </div>
-    <div class="inputContainer">
-        <label>Nombre</label>
-        <InputText @bind-Value="@cliente.Telefono"/>
-    </div>
-</EditForm>
-<h3>Datos del vehículo</h3>
-<EditForm Model="vehiculo">
-    <div class="inputContainer">
-        <label>Patente</label>
-        <InputText @bind-Value="@vehiculo.Patente"/>
-    </div>
-    <div class="inputContainer">
-        <label>Marca</label>
-        <InputText @bind-Value="@vehiculo.Marca"/>
-    </div>
-    <div class="inputContainer">
-        <label>Año</label>
-        <InputNumber @bind-Value="@vehiculo.Año"/>
-    </div>
-</EditForm>
-<h3>Datos de la póliza</h3>
-<EditForm Model="poliza">
-    <div>
-        <label>Empresa</label>
-        <select name="empresas" id="empresas-select" @bind="poliza.Empresa"> 
-          <option value="">Empresas</option>
-          @foreach (Empresa empresa in empresas)
-          {
-              <option value="@empresa.Nombre">@empresa.Nombre</option>
-          }
-        </select>
-    </div>
-    
+<div class="card">
 
-</EditForm>
-@code {
-    [Parameter] public Cliente cliente { get; set; }
-    [Parameter] public Vehiculo vehiculo { get; set; }
-    [Parameter] public Poliza poliza { get; set; }
-    public List<Empresa> empresas;
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+    </svg> 
+    <div class="datosCliente">
+        <EditForm Model="cliente">
+            <h3>Datos personales</h3>
+            <div class="inputContainer">
+                <label>Nombre</label>
+                <InputText @bind-Value="@cliente.Nombre" placeholder="Nombre" />
+            </div>
+            <div class="inputContainer">
+                <label>Apellido</label>
+                <InputText @bind-Value="@cliente.Apellido" placeholder="Apellido" />
+            </div>
+            <div class="inputContainer">
+                <label>Ciudad</label>
+                <InputText @bind-Value="@cliente.Ciudad" placeholder="Ciudad" />
+            </div>
+            <div class="inputContainer">
+                <label>Direccion</label>
+                <InputText @bind-Value="@cliente.Direccion" placeholder="Direccion" />
+            </div>
+            <div class="inputContainer">
+                <label>Telefono</label>
+                <InputText @bind-Value="@cliente.Telefono" placeholder="Telefono" />
+            </div>
+            <div class="inputContainer">
+                <label>Emial</label>
+                <InputText @bind-Value="@cliente.Mail" placeholder="Email" />
+            </div>
+        </EditForm>
+    </div>
+ 
+
+    <div class="datosVehiculo">
+        <EditForm Model="vehiculo">
+            <h3>Datos del vehículo </h3>
+
+            <div class="inputContainer">
+                <label>Patente</label>
+                <InputText @bind-Value="@vehiculo.Patente" placeholder="Patente" />
+            </div>
+            <div class="inputContainer">
+                <label>Modelo</label>
+                <InputText @bind-Value="@vehiculo.Marca" placeholder="Modelo" />
+            </div>
+            <div class="inputContainer">
+                <label>Año</label>
+                <InputNumber @bind-Value="@vehiculo.Año" placeholder="Año" />
+            </div>
+        </EditForm>
+    </div> 
+
+     <div class="datosPoliza">
+        <EditForm Model="poliza" OnValidSubmit="Grabar">
+            <h3>Datos de la póliza</h3>
+
+            <div class="inputContainer">
+                <label>Nro Poliza</label>
+                <InputNumber @bind-Value="@poliza.NroPoliza" placeholder="Nro Poliza" />
+            </div>
+            <div class="inputContainer">
+                <label>Vigencia Poliza</label>
+                <InputDate class="form-control" @bind-Value="poliza.InicioVigencia" placeholder="Inicio Vigencia" />
+            </div>
+            <div class="inputContainer">
+                <label>Fin Vigencia</label>
+                <InputDate class="form-control" @bind-Value="poliza.FinVigencia" placeholder="Fin Vigencia" />
+            </div>
+            <div class="inputContainer">
+                <label>Valor Cuota</label>
+                <InputNumber class="form-control" @bind-Value="poliza.ValorCuota" placeholder="Valor Cuota" />
+            </div>
+            <div class="inputContainer">
+                <label>Valor Asegurado</label>
+                <InputNumber class="form-control" @bind-Value="poliza.ValorAsegurado" placeholder="Valor asegurado" />
+            </div>
+
+            <div class="inputContainer">
+                <label>Empresa</label>
+                <select name="empresas" id="empresas-select" @bind="poliza.EmpresaID">
+                    <option value="">Empresas</option>
+                    @if (empresas.Count > 0)
+                    {
+                        @foreach (Empresa empresa in empresas)
+                        {
+                            <option value="@empresa.EmpresaID">@empresa.Nombre</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="inputContainer">
+                <label>Tipo cobertura</label>
+                <div>
+                    <select name="coberturas" id="corturas-select" @bind="poliza.CoberturaID">
+                        <option value="">Coberturas</option>
+                        @if (coberturas.Count > 0)
+                        {
+                            @foreach (Cobertura cobertura in coberturas)
+                            {
+                                <option value="@cobertura.CoberturaID">@cobertura.Tipo</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+            <button class="btn btn-primary" type="submit" id="btnGuardar">Guardar</button>
+
+        </EditForm>
+    </div> 
+ 
+</div>
+
+@code { 
+    public Cliente cliente = new Cliente();
+    public Vehiculo vehiculo = new Vehiculo();
+    public Poliza poliza = new Poliza();
+    // [Parameter] public EventCallback onValidSubmit { get; set; }
+    public List<Empresa> empresas = new List<Empresa>();
+    public List<Cobertura> coberturas = new List<Cobertura>();
 
 
     protected override async void OnInitialized()
     {
         await readEmpresas();
+        await readCobertura();
+        //  fecha actual
+        poliza.InicioVigencia = DateTime.Now.Date;
+        poliza.FinVigencia = DateTime.Now.Date;
     }
     private async Task readEmpresas()
     {
-        var respuesta = await http.Get<List<Empresa>>($"/Empresas");
+        var respuesta = await http.Get<List<Empresa>>("/Empresas");
         if (!respuesta.Error)
         {
             empresas = respuesta.Respuesta;
         }
     }
+
+
+    private async Task readCobertura()
+    {
+        var respuesta = await http.Get<List<Cobertura>>("/Coberturas");
+        if (!respuesta.Error)
+        {
+            coberturas = respuesta.Respuesta;
+        }
+    }
+
+    private async void Grabar()
+    {
+        Console.WriteLine($"{cliente.Nombre} {poliza.NroPoliza} {vehiculo.Marca}");
+
+        try
+        {
+            var httpRespuestaCliente = await http.Post<Cliente>("/cliente/ID", cliente);
+
+            if (httpRespuestaCliente.Error)
+            {
+                var body = httpRespuestaCliente.HttpResponseMessage;
+                Console.WriteLine($"Error al crear cliente: {body}");
+            }
+            else
+            {
+                Console.WriteLine("Se cargo");
+
+                var clienteID = httpRespuestaCliente.Respuesta as int?;
+
+                if (clienteID.HasValue)
+                {
+                    Console.WriteLine($"Cliente ID: {clienteID.Value}");
+                    vehiculo.ClienteID = clienteID.Value;
+
+                    var httpRespuestaPoliza = await http.Post<Poliza>("api/Polizas", poliza);
+
+                    if (httpRespuestaPoliza.Error)
+                    {
+                        var body = httpRespuestaPoliza.HttpResponseMessage;
+                        Console.WriteLine($"Error al crear póliza: {body}");
+                    }
+                    else
+                    {
+                        var polizaID = httpRespuestaPoliza.Respuesta as int?;
+
+                        if (polizaID.HasValue)
+                        {
+                            Console.WriteLine($"Póliza ID: {polizaID.Value}");
+                            vehiculo.PolizaID = polizaID.Value;
+
+                            var httpRespuestaVehiculo = await http.Post<Vehiculo>("api/Vehiculos", vehiculo);
+
+                            if (httpRespuestaVehiculo.Error)
+                            {
+                                var body = httpRespuestaVehiculo.HttpResponseMessage;
+                                Console.WriteLine($"Error al crear vehículo: {body}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Vehículo creado exitosamente.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error al obtener el ID de la póliza creada.");
+                        }
+                    }
+                }
+                else
+                {
+                    // no se puede obtener el ID del cliente creado.
+                    Console.WriteLine("Error al obtener el ID del cliente creado.");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al procesar la solicitud: {ex.Message}");
+        }
+
+    }
 }
+}
+
+@* 
+
+  //     try
+        //     {
+        //         var httpRespuestaCliente = await http.Post<Cliente>("/cliente/ID", cliente);
+
+        //         if (httpRespuestaCliente.Error)
+        //         {
+        //             var body = httpRespuestaCliente.HttpResponseMessage;
+        //         }
+        //         else
+        //         {
+        //             Console.WriteLine("Se cargo cliente");
+        //             var clienteID = httpRespuestaCliente.Respuesta as int?;
+
+        //             if (clienteID.HasValue)
+        //             {
+        //                 Console.WriteLine($"Cliente ID: {clienteID.Value}");
+        //             }
+        //             else
+        //             {
+        //                 // Si la respuesta no es un int, asumir que es un objeto Cliente completo
+        //                 var clienteCreado = httpRespuestaCliente.Respuesta as Cliente;
+
+        //                 if (clienteCreado != null)
+        //                 {
+        //                     Console.WriteLine($"Cliente ID: {clienteCreado.ClienteID}");
+        //                     vehiculo.ClienteID = clienteCreado.ClienteID;
+        //                 }
+        //             }
+        //         }
+
+        //         var httpRespuestaPoliza = await http.Post<Poliza>("/poliza/ID", poliza);
+
+        //         if (httpRespuestaPoliza.Error)
+        //         {
+        //             var body = httpRespuestaPoliza.HttpResponseMessage;
+        //         }
+        //         else
+        //         {
+        //             Console.WriteLine("Se cargo poliza");
+        //             var polizaID = httpRespuestaPoliza.Respuesta as int?;
+
+        //             if (polizaID.HasValue)
+        //             {
+        //                 Console.WriteLine($"Póliza ID: {polizaID.Value}");
+        //             }
+        //             else
+        //             {
+        //                 var polizaCreada = httpRespuestaPoliza.Respuesta as Poliza;
+
+        //                 if (polizaCreada != null)
+        //                 {
+        //                     Console.WriteLine($"Cliente ID: {polizaCreada.PolizaID}");
+        //                 }
+        //             }
+        //         }
+
+        //         var httpRespuestaVehiculo = await http.Post<Vehiculo>("api/Vehiculos", vehiculo);
+
+        //         if (httpRespuestaVehiculo.Error)
+        //         {
+        //             var body = httpRespuestaVehiculo.HttpResponseMessage;
+        //         }
+        //     }
+
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine($"Error al procesar la solicitud: {ex.Message}");
+        //     }
+        // }
+        ]]*@
+ 

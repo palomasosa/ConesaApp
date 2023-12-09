@@ -33,6 +33,16 @@ namespace ConesaApp.Server.Controllers
             return clientes;
         }
 
+        [HttpGet("/Clientes/Filtro")]
+        public async Task<ActionResult<Cliente>> GetClienteFiltro(string query)
+        {
+            if (_dbContext.Clientes == null)
+            {
+                return NotFound();
+            }
+            var clientes = _dbContext.Clientes.Where(x => x.Nombre.ToLower().Contains(query.ToLower()) || x.Apellido.ToLower().Contains(query.ToLower())).ToList();
+            return Ok(clientes);
+        }
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Cliente>> GetClienteId(int id)
         {
@@ -49,24 +59,39 @@ namespace ConesaApp.Server.Controllers
             return Ok(cliente);
         }
 
-        [HttpPost]
+        [HttpGet("{clienteID}/Vehiculos")]
+        public IActionResult ObtenerVehiculosDeCliente(int clienteId)
+        {
+            try
+            {
+                var vehiculos = _dbContext.Vehiculos
+                    .Where(v => v.ClienteID == clienteId)
+                    .ToList();
+
+                return Ok(vehiculos);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al obtener vehículos: {ex.Message}");
+            }
+        }
+
+        [HttpPost("/cliente/ID")]
+
         public async Task<ActionResult<int>> PostCliente(Cliente cliente)
         {
             try
             {
                 _dbContext.Clientes.Add(cliente);
                 await _dbContext.SaveChangesAsync();
-                //Aca nos devuelve el cliente recién creado
-                return cliente.ClienteID;
+                // Devuelve el ClienteID recién creado
+                return Ok(Convert.ToInt32(cliente.ClienteID));
             }
             catch (Exception err)
             {
-
                 return BadRequest(err.Message);
             }
-            
         }
-
         [HttpPut("{id}")]
         public async Task<ActionResult<Cliente>> PutCliente(int id, Cliente cliente)
         {

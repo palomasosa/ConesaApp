@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj": {}
+    "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj": {
+    "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj",
+        "projectUniqueName": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj",
         "projectName": "ConesaApp.Database",
-        "projectPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj",
-        "packagesPath": "C:\\Users\\palos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp.Database\\obj\\",
+        "projectPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj",
+        "packagesPath": "C:\\Users\\cande\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp.Database\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\palos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cande\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -63,7 +68,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -72,21 +78,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj": {
+    "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj",
+        "projectUniqueName": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj",
         "projectName": "ConesaApp.Client",
-        "projectPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj",
-        "packagesPath": "C:\\Users\\palos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Client\\obj\\",
+        "projectPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Client\\ConesaApp.Client.csproj",
+        "packagesPath": "C:\\Users\\cande\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Client\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\palos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cande\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,17 +104,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj": {
-                "projectPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj"
+              "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj": {
+                "projectPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp.Database\\ConesaApp.Database.csproj"
               },
-              "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj": {
-                "projectPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj"
+              "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj": {
+                "projectPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj"
               }
             }
           }
@@ -135,14 +146,15 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[6.0.4, 6.0.4]"
+              "version": "[6.0.22, 6.0.22]"
             }
           ],
           "frameworkReferences": {
@@ -150,7 +162,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
@@ -159,17 +171,21 @@
         }
       }
     },
-    "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj": {
+    "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj",
         "projectName": "ConesaApp.Shared",
-        "projectPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj",
-        "packagesPath": "C:\\Users\\palos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\palos\\source\\repos\\ConesaApp\\ConesaApp\\ConesaApp\\Shared\\obj\\",
+        "projectPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Shared\\ConesaApp.Shared.csproj",
+        "packagesPath": "C:\\Users\\cande\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cande\\Source\\Repos\\ConesaApp\\ConesaApp\\Shared\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\palos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cande\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -177,6 +193,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -200,7 +217,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -209,7 +227,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
