@@ -3,24 +3,30 @@
 @inject IHttpService http
 
 <h3>Datos personales</h3>
+
 <EditForm Model="cliente">
     <div class="inputContainer">
         <label>Nombre</label>
         <InputText @bind-Value="@cliente.Nombre"/>
     </div>
     <div class="inputContainer">
-        <label>Nombre</label>
+        <label>Apellido</label>
+        <InputText @bind-Value="@cliente.Apellido" />
+    </div>
+    <div class="inputContainer">
+        <label>Ciudad</label>
         <InputText @bind-Value="@cliente.Ciudad" placeholder="Ciudad"/>
     </div>
     <div class="inputContainer">
-        <label>Nombre</label>
+        <label>Direccion</label>
         <InputText @bind-Value="@cliente.Direccion"/>
     </div>
     <div class="inputContainer">
-        <label>Nombre</label>
+        <label>Telefono</label>
         <InputText @bind-Value="@cliente.Telefono"/>
-    </div>
+    </div> 
 </EditForm>
+
 <h3>Datos del vehículo</h3>
 <EditForm Model="vehiculo">
     <div class="inputContainer">
@@ -28,7 +34,7 @@
         <InputText @bind-Value="@vehiculo.Patente"/>
     </div>
     <div class="inputContainer">
-        <label>Marca</label>
+        <label>Modelo</label>
         <InputText @bind-Value="@vehiculo.Marca"/>
     </div>
     <div class="inputContainer">
@@ -37,24 +43,50 @@
     </div>
 </EditForm>
 <h3>Datos de la póliza</h3>
-<EditForm Model="poliza">
+<EditForm Model="poliza" OnValidSubmit="Grabar">
+    <div class="inputContainer">
+        <label>Nro Poliza</label>
+        <InputNumber @bind-Value="@poliza.NroPoliza" />
+    </div>
+    <div class="inputContainer">
+        <label>Vigencia Poliza</label>
+        <InputDate class="form-control" @bind-Value="poliza.InicioVigencia" />
+    </div>
+    <div class="inputContainer">
+        <label>Fin Vigencia</label>
+        <InputDate class="form-control" @bind-Value="poliza.FinVigencia" />
+    </div>
+    <div class="inputContainer">
+        <label>Valor Cuota</label>
+        <InputNumber class="form-control" @bind-Value="poliza.ValorCuota" />
+    </div>
+    <div class="inputContainer">
+        <label>Valor Asegurado</label>
+        <InputNumber class="form-control" @bind-Value="poliza.ValorAsegurado" />
+    </div>
+
     <div>
         <label>Empresa</label>
-        <select name="empresas" id="empresas-select" @bind="poliza.Empresa"> 
+        @* <select name="empresas" id="empresas-select" @bind="poliza.EmpresaID"> 
           <option value="">Empresas</option>
-          @foreach (Empresa empresa in empresas)
+            @if(empresas.Count > 0)
+            {
+               @foreach (Empresa empresa in empresas)
           {
               <option value="@empresa.Nombre">@empresa.Nombre</option>
-          }
-        </select>
+          } 
+            }
+            
+        </select> *@
     </div>
-    
-
+    <button class="btn btn-primary" type="submit">Guardar</button>
 </EditForm>
+
 @code {
     [Parameter] public Cliente cliente { get; set; }
     [Parameter] public Vehiculo vehiculo { get; set; }
     [Parameter] public Poliza poliza { get; set; }
+    // [Parameter] public EventCallback onValidSubmit { get; set; }
     public List<Empresa> empresas;
 
 
@@ -70,4 +102,86 @@
             empresas = respuesta.Respuesta;
         }
     }
+
+    private async void Grabar()
+    {
+        // var httpRespuestaCliente = await http.Post<Cliente>("api/Cliente", cliente );
+        // if (httpRespuestaCliente.Error)
+        // {
+        //     var body = httpRespuestaCliente.HttpResponseMessage;
+        // }
+        // else
+        // {
+        //     var clienteID = httpRespuestaCliente.Respuesta;
+        //     Console.WriteLine(clienteID);
+        // }
+
+        try
+        {
+            var httpRespuestaCliente = await http.Post<Cliente>("api/Cliente", cliente);
+
+            if (httpRespuestaCliente.Error)
+            {
+                var body = httpRespuestaCliente.HttpResponseMessage;
+            }
+            else
+            {
+                var clienteID = httpRespuestaCliente.Respuesta;
+
+                if (clienteID != null)
+                {
+                    Console.WriteLine($"Cliente ID: {clienteID}");
+                }
+                else
+                {
+                    // Si la respuesta no es un int, asumir que es un objeto Cliente completo
+                    var clienteCreado = httpRespuestaCliente.Respuesta as Cliente;
+
+                    if (clienteCreado != null)
+                    {
+                        Console.WriteLine($"Cliente ID: {clienteCreado.ClienteID}");
+                        vehiculo.ClienteID = clienteCreado.ClienteID;
+                    }
+                }
+            }
+
+            var httpRespuestaPoliza = await http.Post<Poliza>("api/Poliza", poliza);
+
+            if (httpRespuestaPoliza.Error)
+            {
+                var body = httpRespuestaPoliza.HttpResponseMessage;
+            }
+            else
+            {
+                var polizaID = httpRespuestaPoliza.Respuesta;
+
+                if (polizaID != null)
+                {
+                    Console.WriteLine($"Póliza ID: {polizaID}");
+                }
+                else
+                {
+                    var polizaCreada = httpRespuestaPoliza.Respuesta as Poliza;
+
+                    if (polizaCreada != null)
+                    {
+                        Console.WriteLine($"Cliente ID: {polizaCreada.PolizaID}");
+                        vehiculo.ClienteID = polizaCreada.PolizaID;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al procesar la solicitud: {ex.Message}");
+        }
+
+        var httpRespuestaVehiculo = await http.Post<Vehiculo>("api/Vehiculo", vehiculo);
+
+        if (httpRespuestaVehiculo.Error)
+        {
+            var body = httpRespuestaVehiculo.HttpResponseMessage;
+        }
+   
+    }
 }

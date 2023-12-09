@@ -1834,3 +1834,8 @@ C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.
 C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\refint\ConesaApp.Client.dll
 C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\ConesaApp.Client.pdb
 C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\ref\ConesaApp.Client.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\scopedcss\Shared\MostrarCliente.razor.rz.scp.css
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\scopedcss\Shared\ConfirmacionBajaCliente.razor.rz.scp.css
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\scopedcss\Pages\Main\Inicio.razor.rz.scp.css
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\scopedcss\Pages\Main\Login.razor.rz.scp.css
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp\Client\obj\Debug\net6.0\scopedcss\Shared\LoginLayout.razor.rz.scp.css

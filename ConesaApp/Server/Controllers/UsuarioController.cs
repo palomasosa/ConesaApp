@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ConesaApp.Database.Data.Entities;
 using ConesaApp.Database.Data;
-
+using ConesaApp.Server.Data.DTO;
 
 namespace ConesaApp.Server.Controllers
 {
@@ -17,20 +17,83 @@ namespace ConesaApp.Server.Controllers
         {
             _dbContext = dbContext;
         }
-        [HttpGet("/Usuarios")]
-        public async Task<ActionResult<List<Usuario>>> GetUsuarios()
+
+
+        [HttpPost]
+        public async Task<ActionResult<int>> PostUsuario(Usuario_SignInDTO usuario)
         {
-            var usuarios = await _dbContext.Usuarios
-                                .ToListAsync();
-
-            if (usuarios == null)
+            try
             {
-                return NotFound($"No hay usuarios para mostrar");
+                Usuario add = new Usuario();
 
+                add.Nombre = usuario.Nombre;
+                add.Apellido = usuario.Apellido;
+                add.Mail = usuario.Mail;
+                add.Contraseña = usuario.Contraseña;
+
+                _dbContext.Usuarios.Add(add);
+                await _dbContext.SaveChangesAsync();
+                return Ok(add);
+            }
+            catch (Exception err)
+            {
+
+                return BadRequest(err.Message);
             }
 
-            return usuarios;
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<int>> LoginRequest(Usuario_LoginDTO usuario)
+        {
+            try
+            {
+                Usuario? temp = await _dbContext.Usuarios.Where(user => user.Mail == usuario.Mail).FirstOrDefaultAsync();
+
+                if (temp == null)
+                {
+                    return Unauthorized("Usuario o contraseña incorrectos");
+                }
+
+                if (temp.Contraseña == usuario.Contraseña)
+                {
+                    Usuario response = new Usuario();
+                    response.UsuarioID = temp.UsuarioID;
+                    response.Nombre = temp.Nombre;
+                    response.Apellido = temp.Apellido;
+                    response.Mail = temp.Mail;
+                    response.Contraseña = "";
+
+                    return Ok(response);
+                }
+                else
+                {
+
+                    return Unauthorized("Usuario o contraseña incorrectos");
+                }
+            }
+            catch (Exception err)
+            {
+
+                return BadRequest(err.Message);
+            }
+
+        }
+
+        //[HttpGet("/Usuarios")]
+        //public async Task<ActionResult<List<Usuario>>> GetUsuarios()
+        //{
+        //    var usuarios = await _dbContext.Usuarios
+        //                        .ToListAsync();
+
+        //    if (usuarios == null)
+        //    {
+        //        return NotFound($"No hay usuarios para mostrar");
+
+        //    }
+
+        //    return usuarios;
+        //}
         //[HttpGet]
         //public async Task<ActionResult<IEnumerable<Pagos>>> GetPagos()
         //{

@@ -34,6 +34,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Pages/Main/ClienteNuevo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpblxDbGllbnRlTnVldm8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Pages/Main/FormCliente.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpblxGb3JtQ2xpZW50ZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -50,6 +54,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpblxDbGllbnRlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-0ophteuo75
 
+[C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Pages/Main/Inicio.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpblxJbmljaW8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-h4jlgwo5k5
+
+[C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Pages/Main/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpblxMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-xakeodgmyy
+
 [C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Pages/Main/Pagos.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpblxQYWdvcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-bl8vr66mtu
@@ -58,9 +70,21 @@ build_metadata.AdditionalFiles.CssScope = b-bl8vr66mtu
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEJ1c2NhZG9yLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-4jihwlmx48
 
+[C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Shared/ConfirmacionBajaCliente.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbmZpcm1hY2lvbkJhamFDbGllbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-2ss5vk1qlz
+
+[C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Shared/LoginLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-yo40j3bv4r
+
 [C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-6i9p38o976
+
+[C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Shared/MostrarCliente.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1vc3RyYXJDbGllbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-g2mczbx1rj
 
 [C:/Users/palos/source/repos/ConesaApp/ConesaApp/ConesaApp/Client/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=

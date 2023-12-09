@@ -1,0 +1,67 @@
+﻿@inject NavigationManager Navigation
+
+@using ConesaApp.Client.Pages.Services
+@using ConesaApp.Database.Data.Entities
+
+@inject IHttpService http
+
+@layout LoginLayout
+
+<form class="login-card"> 
+    <div class="top-circle">
+    </div>
+    <div class="input-container">
+        <div class="input-icon"></div>
+        <input class="input-placeholder" type="email" placeholder="Nombre de usuario" @bind="@mail" required>
+    </div>
+    <div class="input-container">
+        <div class="input-icon"></div>
+        <input  class="input-placeholder" type="password" placeholder="Contraseña" @bind="@contraseña" required>
+    </div>
+    <p class="text-link" >¿Olvidaste tu contraseña?</p>
+    <div class="input-remember-container">
+        <input class="input-chkbx" type="checkbox">
+        <label  class="text-small">Recordar contraseña</label>
+    </div>
+    <button class="submit-button" type="button" @onclick=log_in>
+        <h1 class="submit-text">Ingresar</h1>
+    </button>
+    @if(wrongUser)
+    {
+        <p style="color:red">Usuario o contraseña incorrectos</p>
+    }
+</form>
+
+@code {
+
+    string mail = "paloma@mail.com";
+    string contraseña = "contraseña";
+
+    bool wrongUser = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    private async Task log_in()
+    {
+
+        Usuario body = new Usuario();
+        body.Mail = this.mail;
+        body.Contraseña = this.contraseña;
+
+        var res = await http.Post<Usuario>($"/api/Usuario/login",body);
+        if (!res.Error)
+        {
+            AuthenticationService.mail = this.mail;
+            AuthenticationService.password = this.contraseña;
+            AuthenticationService.usuarioID = body.UsuarioID;
+            Navigation.NavigateTo("/inicio");
+        }
+        else
+        {
+            this.wrongUser = true;
+        }
+    }
+}
