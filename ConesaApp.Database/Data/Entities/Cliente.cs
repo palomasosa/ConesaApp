@@ -7,7 +7,7 @@ namespace ConesaApp.Database.Data.Entities
     public class Cliente
     {
         [Key] public int ClienteID { get; set; }
-        public bool Activo { get; set; }
+        public bool Activo { get; set; } = true;
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string? Mail { get; set; }

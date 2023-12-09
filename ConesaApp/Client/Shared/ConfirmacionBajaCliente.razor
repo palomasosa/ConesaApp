@@ -1,8 +1,39 @@
-﻿<div class="confirmacion">
+﻿@using ConesaApp.Client.Pages.Services
+@using ConesaApp.Database.Data.Entities
+@inject IHttpService http
+<div class="confirmacion">
     <p>¿Está seguro que desea dar del baja el vehículo?</p>
-    <button>Dar de baja</button>
+    <div class="btns">
+        <button class="btn-baja" @onclick="DarBajaCliente">Dar de baja cliente</button>
+        <button class="btn-baja">Dar de baja vehículo</button>
+        <button class="btn btn-light"  @onclick="Cerrar">Cancelar</button>
+    </div>
+    
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback Cerrar { get; set; }
+    [Parameter]
+    public Vehiculo vehiculo { get; set; }
+    [Parameter]
+    public EventCallback DarBajaCliente { get; set; }
+    [Parameter]
+    public bool Baja { get; set; }
 
+    private async Task Cancelar()
+    {
+        await Cerrar.InvokeAsync(null);
+    }
+
+    private async Task DarBajaVehiculo(Vehiculo v)
+    {
+        var response = await http.Delete($"/api/Vehiculos/{v.VehiculoID}");
+        if (response.Error)
+        {
+            var body = "Error";
+        }      
+    }
 }
+
+

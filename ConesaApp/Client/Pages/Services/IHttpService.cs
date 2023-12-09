@@ -7,5 +7,6 @@ namespace ConesaApp.Client.Pages.Services
         Task<HttpRespuesta<T>> Get<T>(string url);
         Task<HttpRespuesta<T>> Post<T>(string url, T enviar);
         Task<HttpRespuesta<T>> Put<T>(string url, T enviar);
+
     }
 }

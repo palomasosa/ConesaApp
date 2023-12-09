@@ -112,6 +112,58 @@ namespace ConesaApp.Server.Controllers
             }
         }
 
+        [HttpDelete("/Baja/{id}")]
+        public async Task<ActionResult<Cliente>> DarBajaCliente(int id)
+        {
+
+            var clienteSolicitado = _dbContext.Clientes
+               .Where(e => e.ClienteID == id).FirstOrDefault();
+
+            if (clienteSolicitado == null)
+            {
+                return NotFound("No se encontró el cliente a modificar");
+            }
+
+            clienteSolicitado.Activo = false;
+
+            try
+            {
+                _dbContext.Clientes.Update(clienteSolicitado);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Los datos no se han podido actualizar");
+            }
+        }
+
+        [HttpPut("/Alta/{id}")]
+        public async Task<ActionResult<Cliente>> DarAltaCliente(int id)
+        {
+
+            var clienteSolicitado = _dbContext.Clientes
+               .Where(e => e.ClienteID == id).FirstOrDefault();
+
+            if (clienteSolicitado == null)
+            {
+                return NotFound("No se encontró el cliente a modificar");
+            }
+
+            clienteSolicitado.Activo = true;
+
+            try
+            {
+                _dbContext.Clientes.Update(clienteSolicitado);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Los datos no se han podido actualizar");
+            }
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<int>> DeleteCliente(int id)
         {

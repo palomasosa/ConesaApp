@@ -89,9 +89,16 @@ namespace ConesaApp.Client.Pages.Services
         }
         private async Task<T> DeserializarRespuesta<T>(HttpResponseMessage response)
         {
-            var respuestaStr = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(respuestaStr,
-                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            if (response.Content != null)
+            {
+                var respuestaStr = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(respuestaStr))
+                {
+                    return JsonSerializer.Deserialize<T>(respuestaStr,
+                        new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                }
+            }
+            return default(T);
         }
     }
 }

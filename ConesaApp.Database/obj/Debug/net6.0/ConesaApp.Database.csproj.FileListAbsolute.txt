@@ -12,3 +12,17 @@ C:\Users\palos\source\repos\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\refint
 C:\Users\palos\source\repos\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.pdb
 C:\Users\palos\source\repos\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.genruntimeconfig.cache
 C:\Users\palos\source\repos\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ref\ConesaApp.Database.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\bin\Debug\net6.0\ConesaApp.Database.deps.json
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\bin\Debug\net6.0\ConesaApp.Database.runtimeconfig.json
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\bin\Debug\net6.0\ConesaApp.Database.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\bin\Debug\net6.0\ConesaApp.Database.pdb
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.csproj.AssemblyReference.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.AssemblyInfoInputs.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.AssemblyInfo.cs
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.csproj.CoreCompileInputs.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\refint\ConesaApp.Database.dll
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.pdb
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ConesaApp.Database.genruntimeconfig.cache
+C:\Users\palos\source\repos\ConesaApp\ConesaApp\ConesaApp.Database\obj\Debug\net6.0\ref\ConesaApp.Database.dll

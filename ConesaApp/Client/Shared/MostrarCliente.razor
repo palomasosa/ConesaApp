@@ -1,5 +1,7 @@
-﻿@using ConesaApp.Database.Data.Entities
+﻿@using ConesaApp.Client.Pages.Services
+@using ConesaApp.Database.Data.Entities
 @using System.Globalization
+@inject IHttpService http
 <div class="card">
     <div class="up-bar">
         <button class="btn">
@@ -23,6 +25,14 @@
                 <p>Ciudad: @vehiculo.Cliente.Ciudad</p>
                 <p>Dirección: @vehiculo.Cliente.Direccion</p>
                 <p>Teléfono: @vehiculo.Cliente.Telefono</p>
+                @if (@vehiculo.Cliente.Activo)
+                {
+                    <p>Estado: Activo</p>
+                }
+                else
+                {
+                    <p>Estado: Inactivo</p>
+                }
             </div>
             
             <div class="datos-vehiculo">
@@ -47,9 +57,9 @@
        </div> 
         
     </div>
-    @if(mostrarConfirmacionBaja)
+    @if (mostrarConfirmacionBaja)
     {
-        <ConfirmacionBajaCliente/>
+        <ConfirmacionBajaCliente Baja="baja" Cerrar="CerrarConfirmacion" vehiculo="vehiculo" DarBajaCliente="InvokeDarBajaCliente"/>
     }
 </div>
 
@@ -60,11 +70,34 @@
     public Vehiculo vehiculo { get; set; }
     [Parameter]
     public EventCallback Cerrar { get; set; }
+
     bool mostrarConfirmacionBaja = false;
-    bool cerrarMostrarBaja = false; 
+    bool cerrarMostrarBaja = false;
+    bool baja = false;
+
 
     public void mostrarConfirmacion()
     {
-        mostrarConfirmacionBaja = !mostrarConfirmacionBaja;
+        mostrarConfirmacionBaja = true;
+    }
+    public void CerrarConfirmacion()
+    {
+        mostrarConfirmacionBaja = false;
+    }
+
+    private async Task InvokeDarBajaCliente()
+    {
+        Cliente cliente = vehiculo.Cliente;
+        Console.Write(cliente.ClienteID);
+        var response = await http.Delete($"/Baja/{cliente.ClienteID}");
+        if (response.Error)
+        {
+            var body = "Error";
+        }
+        baja = true;
+        Console.Write("Confirmacion dado de baja");
+        CerrarConfirmacion();
+        await Cerrar.InvokeAsync(null);
+        //await Cancelar.InvokeAsync(null);
     }
 }
