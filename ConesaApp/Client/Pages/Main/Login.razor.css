@@ -1,0 +1,91 @@
+﻿.login-card {
+    width: 20.83vw;
+    height: 69vh;
+    background-color: #3D276A;
+    padding-top: 5.7vh;
+    border-radius: 2.6vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: center;
+    gap: 2.95vh
+}
+
+.top-circle {
+    width: 10.4vw;
+    height: 10.4vw;
+    background-color: #999999;
+    border-radius: 50%;
+}
+
+.input-container {
+    width: 15.62vw;
+    height: 4.72vh;
+    border-bottom: 5px solid white;
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+}
+
+.input-icon {
+    width: 2.1vw;
+    height: 2.1vw;
+    background-color: #ffffff;
+    margin: 0.3vw
+}
+
+.input-placeholder {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 2.16vh;
+}
+
+.text-link {
+    color: white;
+    font-style: italic;
+    font-size: 1.77vh;
+}
+
+    .text-link:hover {
+        color: #ffffff;
+        font-style: italic;
+        font-size: 1.77vh;
+        cursor: pointer;
+    }
+
+.input-remember-container {
+    width: 15.62vw;
+    height: 4.72vh;
+    display: flex;
+    align-items: center;
+}
+
+.input-chkbx {
+    width: 1.17vw;
+    height: 1.17vw;
+    background-color: #ffffff;
+    margin-right: 0.3vw;
+}
+
+.text-small {
+    color: #ffffff;
+    font-style: oblique;
+    font-size: 1.77vh;
+}
+
+.submit-button {
+    width: 15.62vw;
+    height: 4.91vh;
+    background-color: #999999;
+    border-radius: 2.6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-text {
+    color: #ffffff;
+    font-style: normal;
+    font-size: 2.45vh
+}

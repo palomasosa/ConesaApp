@@ -1,0 +1,18 @@
+﻿@using ConesaApp.Client
+@using ConesaApp.Database.Data.Entities;
+@using ConesaApp.Client.Pages.Services;
+@inject IHttpService http
+
+<h3>Nuevo Cliente</h3>
+
+<FormCliente
+    cliente="cliente"
+    poliza="poliza"
+    vehiculo="vehiculo"
+     /> 
+
+@code {
+    private Cliente cliente = new Cliente();
+    private Poliza poliza = new Poliza();
+    private Vehiculo vehiculo = new Vehiculo();
+}

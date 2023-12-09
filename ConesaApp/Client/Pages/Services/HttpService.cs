@@ -29,17 +29,24 @@ namespace ConesaApp.Client.Pages.Services
         #region post
 
         
-        public async Task<HttpRespuesta<object>> Post<T>(string url, T enviar)
+        public async Task<HttpRespuesta<T>> Post<T>(string url, T enviar)
         {
             try
             {
                 var enviarJson = JsonSerializer.Serialize(enviar); 
                 var enviarContent = new StringContent(enviarJson, Encoding.UTF8, "application/json");
 
-                var respuesta = await http.PostAsync(url, enviarContent);
+                var response = await http.PostAsync(url, enviarContent);
 
-
-                return new HttpRespuesta<object>(null, !respuesta.IsSuccessStatusCode, respuesta);
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await DeserializarRespuesta<T>(response);
+                    return new HttpRespuesta<T>(respuesta, false, response);
+                }
+                else
+                {
+                    return new HttpRespuesta<T>(default, true, response);
+                }
             }
             catch (Exception )
             {
@@ -49,7 +56,7 @@ namespace ConesaApp.Client.Pages.Services
         #endregion
 
         #region put
-        public async Task<HttpRespuesta<object>> Put<T>(string url, T enviar)
+        public async Task<HttpRespuesta<T>> Put<T>(string url, T enviar)
         {
             try
             {
@@ -57,10 +64,17 @@ namespace ConesaApp.Client.Pages.Services
                 var enviarContent = new StringContent(enviarJson,
                                                       Encoding.UTF8,
                                                       "application/json");
-                var respuesta = await http.PutAsync(url, enviarContent);
-                return new HttpRespuesta<object>(null,
-                                                 !respuesta.IsSuccessStatusCode,
-                                                 respuesta);
+                var response = await http.PutAsync(url, enviarContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await DeserializarRespuesta<T>(response);
+                    return new HttpRespuesta<T>(respuesta, false, response);
+                }
+                else
+                {
+                    return new HttpRespuesta<T>(default, true, response);
+                }
             }
             catch (Exception e) { throw; }
         }

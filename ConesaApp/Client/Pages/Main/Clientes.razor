@@ -22,7 +22,7 @@
                <td>@v.Cliente.Telefono</td>
                <td>@v.Patente</td>
                <td>@v.Poliza.Cobertura.Tipo</td>
-               <td><button class="btnMostrar">Mostrar</button></td>
+               <td><button class="btnMostrar" @onclick="()=>mostrarCliente(v)">Mostrar</button></td>
                @if (v.Poliza.FinVigencia < DateTime.Today)
                     {
                     <td>Vencido</td>
@@ -52,6 +52,11 @@
             </tr>
          }
         </table>
+        @if (vehiculoSeleccionado != null && !cerrarVehiculo)
+        {
+          <MostrarCliente vehiculo=vehiculoSeleccionado Cerrar="CerrarVehiculo" />
+        }
+
     </div>
 
 @code {
@@ -65,7 +70,20 @@
     public DateTime fechaHasta { get; set; }
     [Parameter]
     public bool busquedaVencimiento { get; set; }
+    bool mostrar = false;
+    bool cerrarVehiculo = false;
+    private Vehiculo vehiculoSeleccionado;
 
+    private void mostrarCliente(Vehiculo v)
+    {
+        vehiculoSeleccionado = v;
+    }
+    private void CerrarVehiculo()
+ {
+     cerrarVehiculo = true;
+     vehiculoSeleccionado = null;
+     cerrarVehiculo = false;
+ }
     List<Vehiculo> vehiculos = new List<Vehiculo>();
     protected override async Task OnInitializedAsync()
     {

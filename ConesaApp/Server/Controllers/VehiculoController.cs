@@ -21,7 +21,7 @@ namespace ConesaApp.Server.Controllers
         [HttpGet("/Vehiculos")]
         public async Task<ActionResult<List<Vehiculo>>> GetVehiculos()
         {
-             return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x=>x.Poliza.Cobertura).Include(y => y.Cliente).ToListAsync();
+             return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x=>x.Poliza.Cobertura).Include(v=>v.Poliza.Empresa).Include(y => y.Cliente).ToListAsync();
         }
 
         [HttpGet("{id:int}")]
