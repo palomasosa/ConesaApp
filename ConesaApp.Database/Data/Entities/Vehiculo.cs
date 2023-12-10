@@ -13,7 +13,7 @@ namespace ConesaApp.Database.Data.Entities
     public class Vehiculo
     {
         [Key] public int VehiculoID { get; set; }
-       // public bool Activo { get; set; } = true;
+        public bool Activo { get; set; } = true;
         public int? Año { get; set; }
         public string Patente { get; set; }
         public string? Marca { get; set; }

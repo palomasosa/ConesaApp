@@ -56,6 +56,11 @@
                             </div>*@
                     </div>
                     <div class="switches" hidden=@hiddenSwitches>
+                        <span style="color:#141C6C;">Dados de baja</span>
+                        <label class="switch">
+                            <input type="checkbox" @bind="mostrarDadoBaja" @onclick="btnDadosBaja">
+                            <span class="slider round"></span>
+                        </label>
                         <span style="color:#141C6C;">Actualizados</span>
                         <label class="switch">
                             <input type="checkbox" @bind="checkboxChecked" @onclick="OnCheckboxChanged">
@@ -71,7 +76,7 @@
                         </label>
                     </div>
                     <div class="list" hidden=@hiddenListClientes>
-                        <Clientes Busqueda="@busquedaActual" CheckboxChecked="@checkboxChecked" busquedaVencimiento="@busquedaVencimiento" fechaDesde ="@fechaDesde" fechaHasta="@fechaHasta"/>
+                        <Clientes MostrarDadoBaja="@mostrarDadoBaja" Busqueda="@busquedaActual" CheckboxChecked="@checkboxChecked" busquedaVencimiento="@busquedaVencimiento" fechaDesde ="@fechaDesde" fechaHasta="@fechaHasta"/>
                     </div>
                     <div class="listPagos" hidden=@hiddenListPagos>
                         <Pagos Busqueda="@busquedaActual"/>
@@ -91,6 +96,7 @@
     bool checkboxChecked  = false;
     bool busquedaVencimiento = false;
     bool mostrarFormulario = false;
+    bool mostrarDadoBaja = false; 
 
     string backgroundColorBtnClientes = "#FFFFFF";
     string colorBtnClientes = "#141C6C";
@@ -138,6 +144,10 @@
     private void OnCheckboxChanged()
     {
         checkboxChecked = !checkboxChecked;
+    }
+    private void btnDadosBaja()
+    {
+        mostrarDadoBaja = !mostrarDadoBaja;
     }
     private void btnVencimiento()
     {
