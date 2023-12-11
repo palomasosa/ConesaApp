@@ -27,3 +27,15 @@
     color: #FFFFFF;
     padding: 16px;
 }
+
+.btn-alta {
+    height: 28px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    background-color: #038b12;
+    color: #FFFFFF;
+    padding: 16px;
+}

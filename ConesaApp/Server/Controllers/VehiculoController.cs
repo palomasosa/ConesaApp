@@ -23,16 +23,6 @@ namespace ConesaApp.Server.Controllers
         {
              return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x=>x.Poliza.Cobertura).Include(v=>v.Poliza.Empresa).Include(y => y.Cliente).ToListAsync();
         }
-        [HttpGet("/Vehiculos/Activos")]
-        public async Task<ActionResult<List<Vehiculo>>> GetVehiculosActivos()
-        {
-            return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x => x.Poliza.Cobertura).Include(v => v.Poliza.Empresa).Include(y => y.Cliente).Where(x=>x.Cliente.Activo).ToListAsync();
-        }
-        [HttpGet("/Vehiculos/Inactivos")]
-        public async Task<ActionResult<List<Vehiculo>>> GetVehiculosInactivos()
-        {
-            return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x => x.Poliza.Cobertura).Include(v => v.Poliza.Empresa).Include(y => y.Cliente).Where(x => !x.Cliente.Activo).ToListAsync();
-        }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Vehiculo>> GetVehiculoId(int id)
@@ -48,6 +38,24 @@ namespace ConesaApp.Server.Controllers
             }
 
             return Ok(vehiculo);
+        }
+
+        [HttpGet("cliente/{cliente_id:int}")]
+        public async Task<ActionResult<List<Vehiculo>>> GetClienteVehiculos(int cliente_id)
+        {
+            if (_dbContext.Clientes == null)
+            {
+                return NotFound();
+            }
+            var cliente = await _dbContext.Clientes.Where(x => x.ClienteID == cliente_id).FirstOrDefaultAsync();
+            if (cliente == null)
+            {
+                return NotFound($"No existe un cliente de ID= {cliente_id}");
+            }
+
+            List<Vehiculo> vehiculos = await _dbContext.Vehiculos.Where(x => x.ClienteID == cliente_id).ToListAsync();
+
+            return Ok(vehiculos);
         }
 
         [HttpGet("/VehiculoPoliza/{id:int}")]
@@ -249,6 +257,52 @@ namespace ConesaApp.Server.Controllers
             {
 
                 return BadRequest($"Los datos no pudieron ser eliminados por: {e.Message}");
+            }
+        }
+
+        [HttpDelete("baja/{id}")]
+        public async Task<ActionResult<int>> DarDeBaja(int id)
+        {
+            var vehiculo = _dbContext.Vehiculos.Where(x => x.VehiculoID == id).FirstOrDefault();
+            if (vehiculo == null)
+            {
+                return NotFound($"No se encontró el vehiculo de Id {id}");
+            }
+
+            vehiculo.Activo = false;
+
+            try
+            {
+                _dbContext.Vehiculos.Update(vehiculo);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Los datos no se han podido actualizar");
+            }
+        }
+
+        [HttpPut("alta/{id}")]
+        public async Task<ActionResult<int>> DarDeAlta(int id)
+        {
+            var vehiculo = _dbContext.Vehiculos.Where(x => x.VehiculoID == id).FirstOrDefault();
+            if (vehiculo == null)
+            {
+                return NotFound($"No se encontró el vehiculo de Id {id}");
+            }
+
+            vehiculo.Activo = true;
+
+            try
+            {
+                _dbContext.Vehiculos.Update(vehiculo);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Los datos no se han podido actualizar");
             }
         }
     }
