@@ -1,0 +1,134 @@
+﻿@using ConesaApp.Client.Pages.Services
+@using ConesaApp.Database.Data.Entities
+@inject IHttpService http
+<div class="card">
+    <div>
+        <div class="cardDatos">
+        <h4>Datos personales</h4>
+        <EditForm Model="vehiculo.Cliente">
+            <InputText @bind-Value="@vehiculo.Cliente.Nombre" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+            <InputText @bind-Value="@vehiculo.Cliente.Apellido" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+            <InputText @bind-Value="@vehiculo.Cliente.Ciudad" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+            <InputText @bind-Value="@vehiculo.Cliente.Direccion" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+            <InputText @bind-Value="@vehiculo.Cliente.Telefono" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>   
+        </EditForm>
+        </div>
+    
+        <div class="cardDatos">
+            <h4>Datos del vehículo</h4>
+            <EditForm Model="vehiculo">
+                <InputText @bind-Value="@vehiculo.Patente" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+                <InputText @bind-Value="@vehiculo.Marca" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+                <InputNumber @bind-Value="@vehiculo.Año" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+            </EditForm>
+        </div>
+    </div>
+    <div class="cardDatos">
+        <h4>Datos de la póliza</h4>
+        <EditForm Model="vehiculo.Poliza">
+            <select @bind="vehiculo.Poliza.EmpresaID">
+               @foreach (var empresa in empresas)
+               {
+                   <option value="@empresa.EmpresaID">@empresa.Nombre</option>
+               }
+            </select>
+            <InputNumber @bind-Value="@vehiculo.Poliza.ValorAsegurado" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+            <InputDate @bind-Value="@vehiculo.Poliza.InicioVigencia" placeholder="Inicio de vigencia" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
+            <InputDate @bind-Value="@vehiculo.Poliza.FinVigencia" placeholder="Fin de vigencia" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
+            <select @bind="vehiculo.Poliza.CoberturaID">
+               @foreach (var cobertura in coberturas)
+               {
+                   <option value="@cobertura.CoberturaID">@cobertura.Tipo</option>
+               }
+            </select> 
+            <InputNumber @bind-Value="@vehiculo.Poliza.NroPoliza" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
+            <InputNumber @bind-Value="@vehiculo.Poliza.ValorCuota" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
+            <select @onchange="@UpdateActualizado">
+                @if (@vehiculo.Poliza.Actualizado)
+                {
+                    <option value="true" selected="selected">Actualizado</option>
+                    <option value="false">Desactualizado</option>
+                }
+                else
+                {
+                    <option value="true">Actualizado</option>
+                    <option value="false" selected="selected">Desactualizado</option>
+                }
+            </select>
+        </EditForm> 
+    </div>
+    <div class="botones">
+        <button class="btn" @onclick="Cancelar" style="background-color: #ACA4CC;">Cancelar</button>
+        <button class="btn" @onclick="Editar" style="background-color: #5F658E;">Editar</button>
+    </div>
+    
+ 
+</div>
+
+@code {
+    [Parameter]
+    public Vehiculo vehiculo { get; set; }
+    [Parameter]
+    public EventCallback Cerrar { get; set; }
+    private List<Empresa> empresas = new();
+    private List<Cobertura> coberturas = new();
+    public bool polizaActualizada;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await readEmpresas();
+        await readCoberturas();
+    }
+    private async Task readEmpresas()
+    {
+        var respuesta = await http.Get<List<Empresa>>($"/Empresas");
+        if (!respuesta.Error)
+        {
+            empresas = respuesta.Respuesta;
+        }
+    }
+    private async Task readCoberturas()
+    {
+        var respuesta = await http.Get<List<Cobertura>>($"/Coberturas");
+        if (!respuesta.Error)
+        {
+            coberturas = respuesta.Respuesta;
+        }
+    }
+
+    private void UpdateActualizado(ChangeEventArgs e)
+    {
+        polizaActualizada = bool.Parse(e.Value.ToString());
+        Console.WriteLine(polizaActualizada);
+    }
+
+    private async void Editar()
+    {
+        Cliente cliente = vehiculo.Cliente;
+        var respuestaCliente = await http.Put<Cliente>($"api/Cliente/{cliente.ClienteID}",cliente);
+        if (respuestaCliente.Error)
+        {
+            var body = respuestaCliente.HttpResponseMessage;
+        }
+        var respuestaVehiculo = await http.Put<Vehiculo>($"api/Vehiculos/{vehiculo.VehiculoID}",vehiculo);
+        if (respuestaVehiculo.Error)
+        {
+            var body = respuestaVehiculo.HttpResponseMessage;
+        }
+        Poliza poliza = vehiculo.Poliza;
+        poliza.Actualizado = polizaActualizada;
+        var respuestaPoliza = await http.Put<Poliza>($"api/Polizas/{poliza.PolizaID}",poliza);
+        if (respuestaPoliza.Error)
+        {
+            var body = respuestaPoliza.HttpResponseMessage;
+        }
+        await Cancelar();
+    }
+
+
+    private async Task Cancelar()
+    {
+        await Cerrar.InvokeAsync(null);
+    }
+}

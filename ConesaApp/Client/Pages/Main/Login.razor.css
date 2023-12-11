@@ -1,7 +1,12 @@
-﻿.login-card {
+﻿.containter-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-card {
     width: 20.83vw;
-    height: 69vh;
-    background-color: #3D276A;
+    height: 62vh;
+    background-color: #222F7A;
     padding-top: 5.7vh;
     border-radius: 2.6vw;
     display: flex;
@@ -14,14 +19,17 @@
 .top-circle {
     width: 10.4vw;
     height: 10.4vw;
-    background-color: #999999;
+    background-color: #FFFFFF;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-container {
     width: 15.62vw;
     height: 4.72vh;
-    border-bottom: 5px solid white;
+    border-bottom: 3px solid white;
     display: flex;
     justify-content: baseline;
     align-items: center;
@@ -30,7 +38,7 @@
 .input-icon {
     width: 2.1vw;
     height: 2.1vw;
-    background-color: #ffffff;
+    background-color: transparent;
     margin: 0.3vw
 }
 
@@ -38,21 +46,10 @@
     background-color: transparent;
     border: none;
     color: #ffffff;
-    font-size: 2.16vh;
+    font-size: 16px;
 }
 
-.text-link {
-    color: white;
-    font-style: italic;
-    font-size: 1.77vh;
-}
 
-    .text-link:hover {
-        color: #ffffff;
-        font-style: italic;
-        font-size: 1.77vh;
-        cursor: pointer;
-    }
 
 .input-remember-container {
     width: 15.62vw;
@@ -75,17 +72,16 @@
 }
 
 .submit-button {
+    font-size: 18px;
+    color: #222F7A;
     width: 15.62vw;
     height: 4.91vh;
-    background-color: #999999;
+    background-color: #FFFFFF;
+    border: none;
     border-radius: 2.6vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.submit-text {
-    color: #ffffff;
-    font-style: normal;
-    font-size: 2.45vh
-}
+

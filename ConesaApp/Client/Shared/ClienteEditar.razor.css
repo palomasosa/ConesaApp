@@ -1,0 +1,30 @@
+﻿.card {
+     display: flex; 
+    position: absolute;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    -moz-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+}
+.cardDatos{
+    margin:10px;
+}
+.btn {
+    height: 28px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 16px;
+    margin-top: 40px;
+}
+.botones {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

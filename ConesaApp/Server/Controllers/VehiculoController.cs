@@ -185,14 +185,14 @@ namespace ConesaApp.Server.Controllers
         #endregion
 
         [HttpPost]
-        public async Task<ActionResult<int>> PostVehiculo(Vehiculo vehiculo)
+        public async Task<ActionResult<Vehiculo>> PostVehiculo(Vehiculo vehiculo)
         {
             try
             {
                 _dbContext.Vehiculos.Add(vehiculo);
                 await _dbContext.SaveChangesAsync();
                 //Aca nos devuelve el cliente recién creado
-                return vehiculo.VehiculoID;
+                return vehiculo;
             }
             catch (Exception err)
             {
@@ -216,8 +216,8 @@ namespace ConesaApp.Server.Controllers
             vehiculoSolicitado.Patente = vehiculo.Patente;
             vehiculoSolicitado.Año = vehiculo.Año;
             vehiculoSolicitado.Marca = vehiculo.Marca;
-            vehiculoSolicitado.Poliza = vehiculo.Poliza;
-            vehiculoSolicitado.Cliente = vehiculo.Cliente;
+            //vehiculoSolicitado.Poliza = vehiculo.Poliza;
+            //vehiculoSolicitado.Cliente = vehiculo.Cliente;
 
             try
             {

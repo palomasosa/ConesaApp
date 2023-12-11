@@ -33,8 +33,10 @@ namespace ConesaApp.Client.Pages.Services
         {
             try
             {
-                var enviarJson = JsonSerializer.Serialize(enviar); 
+                var enviarJson = JsonSerializer.Serialize(enviar);
+                Console.WriteLine(enviarJson);
                 var enviarContent = new StringContent(enviarJson, Encoding.UTF8, "application/json");
+
 
                 var response = await http.PostAsync(url, enviarContent);
 
@@ -87,6 +89,7 @@ namespace ConesaApp.Client.Pages.Services
                                       !respuesta.IsSuccessStatusCode,
                                       respuesta);
         }
+
         private async Task<T> DeserializarRespuesta<T>(HttpResponseMessage response)
         {
             if (response.Content != null)

@@ -51,14 +51,14 @@ namespace ConesaApp.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> PostPoliza(Poliza poliza)
+        public async Task<ActionResult<Poliza>> PostPoliza(Poliza poliza)
         {
             try
             {
                 _dbContext.Polizas.Add(poliza);
                 await _dbContext.SaveChangesAsync();
                 //Aca nos devuelve el cliente recién creado
-                return poliza.PolizaID;
+                return poliza;
             }
             catch (Exception err)
             {
@@ -87,7 +87,7 @@ namespace ConesaApp.Server.Controllers
             polizaSolicitada.Actualizado = poliza.Actualizado;
             polizaSolicitada.FinVigencia = poliza.FinVigencia;
             polizaSolicitada.InicioVigencia = poliza.InicioVigencia;
-            polizaSolicitada.Pagos = poliza.Pagos;
+            //polizaSolicitada.Pagos = poliza.Pagos;
 
 
             try

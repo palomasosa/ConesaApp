@@ -50,14 +50,14 @@ namespace ConesaApp.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
             try
             {
                 _dbContext.Clientes.Add(cliente);
                 await _dbContext.SaveChangesAsync();
                 //Aca nos devuelve el cliente recién creado
-                return cliente.ClienteID;
+                return cliente;
             }
             catch (Exception err)
             {
