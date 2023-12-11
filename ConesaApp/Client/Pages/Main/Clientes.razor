@@ -19,7 +19,7 @@
          {
             @if (!MostrarDadoBaja)
            {
-               @if (v.Cliente.Activo)
+               @if (v.Activo)
               {
                    <tr>
                    <td>@v.Cliente.Nombre @v.Cliente.Apellido</td>
@@ -58,7 +58,7 @@
             }
             if(MostrarDadoBaja)
             {
-                @if (v.Cliente.Activo == false) 
+                @if (v.Activo == false) 
                 {
                     <tr>
                    <td>@v.Cliente.Nombre @v.Cliente.Apellido</td>

@@ -53,13 +53,21 @@
                 <p>Número de póliza: @vehiculo.Poliza.NroPoliza</p>
                 <p>Valor de la cuota: $@string.Format(String.Format("{0:C}", @vehiculo.Poliza.ValorCuota)).TrimEnd('¤') </p>
             </div>
-            <button class="btn-baja" @onclick="mostrarConfirmacion">Dar de baja</button>
+            @if(vehiculo.Activo)
+            {
+                <button class="btn-baja" @onclick="mostrarConfirmacion">Dar de baja</button>
+            }
+            else
+            {
+                <button class="btn-alta" @onclick="mostrarConfirmacion">Dar de alta</button>
+            }
+            
        </div> 
         
     </div>
     @if (mostrarConfirmacionBaja)
     {
-        <ConfirmacionBajaCliente Baja="baja" Cerrar="CerrarConfirmacion" vehiculo="vehiculo" DarBajaCliente="InvokeDarBajaCliente"/>
+        <ConfirmacionBajaCliente Cerrar="CerrarConfirmacion" vehiculo="vehiculo" DarBajaCliente="InvokeDarBajaCliente" DarBajaVehiculo="InvokeDarBajaVehiculo" DarAltaVehiculo="InvokeDarAltaVehiculo"/>
     }
     @if (mostrarEditar)
    {
@@ -101,15 +109,64 @@
     private async Task InvokeDarBajaCliente()
     {
         Cliente cliente = vehiculo.Cliente;
-        Console.Write(cliente.ClienteID);
         var response = await http.Delete($"/Baja/{cliente.ClienteID}");
         if (response.Error)
         {
             var body = "Error";
         }
-        baja = true;
-        Console.Write("Confirmacion dado de baja");
+
+        var response_v = await http.Get<List<Vehiculo>>($"/api/Vehiculos/cliente/{cliente.ClienteID}");
+
+        List<Vehiculo> vehiculos_cliente = new();
+        if (!response_v.Error)
+        {
+            vehiculos_cliente = response_v.Respuesta;
+        }
+
+        foreach(Vehiculo v in vehiculos_cliente)
+        {
+            Console.WriteLine("vehiculo " + v.VehiculoID);
+            var r = await http.Delete($"/api/Vehiculos/baja/{v.VehiculoID}");
+            if (r.Error)
+            {
+                var body = "Error";
+            }
+        }
+
         CerrarConfirmacion();
         await Cerrar.InvokeAsync(null);
     }
+    private async Task InvokeDarBajaVehiculo()
+    {
+        var response = await http.Delete($"/api/Vehiculos/baja/{vehiculo.VehiculoID}");
+        if (response.Error)
+        {
+            var body = "Error";
+        }
+        CerrarConfirmacion();
+        await Cerrar.InvokeAsync(null);
+    }
+
+    private async Task InvokeDarAltaVehiculo()
+    {
+        var response = await http.Put<int>($"/api/Vehiculos/alta/{vehiculo.VehiculoID}",0);
+        if (response.Error)
+        {
+            var body = "Error";
+        }
+
+        if(!vehiculo.Cliente.Activo)
+        {
+            Cliente cliente = vehiculo.Cliente;
+            var response2 = await http.Put<int>($"/Alta/{cliente.ClienteID}",0);
+            if (response2.Error)
+            {
+                var body = "Error";
+            }
+        }
+
+        CerrarConfirmacion();
+        await Cerrar.InvokeAsync(null);
+    }
+
 }
