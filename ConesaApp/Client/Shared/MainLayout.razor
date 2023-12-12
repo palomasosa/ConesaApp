@@ -38,12 +38,20 @@
                     <div class="searcher">
                         @if (cliente)
                        {
+                           <div class="botonesCliente">
                          <button class="btnNuevo" @onclick="btnNuevoCliente">
                             <span>Nuevo cliente</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFFFFF" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                             </svg>
                             </button>
+                            <button class="btnNuevo" @onclick="btnNuevoVehiculo" style="margin-left: 10px;">
+                            <span>Nuevo vehículo</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFFFFF" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                            </svg>
+                            </button>
+                            </div>
                         }
                         else
                         {
@@ -56,15 +64,16 @@
                         } 
                         @if (mostrarFormularioCliente && cliente)
                        {
-                           <NuevoVehiculo Cancelar="btnNuevoCliente"/>
+                           <NuevoCliente Cancelar="btnNuevoCliente"/>
                        }
                        @if(mostrarFormularioPagos && pagos)
                         {
-                            <NuevoPago/>
+                            <NuevoPago Cancelar="btnNuevoPago"/>
                         }
-                        @*<div class="formularioNuevoCliente" hidden="@(!mostrarFormularioCliente)">
-                            <NuevoVehiculo />
-                        </div>*@
+                        @if(mostrarFormularioVehiculo && cliente)
+                        {
+                            <NuevoVehiculo Cancelar="btnNuevoVehiculo"/>
+                        }
                         <Buscador OnBuscar="ActualizarBusqueda"/>
                     </div>
                     <div class="switches" hidden=@hiddenSwitches>
@@ -108,6 +117,7 @@
     bool checkboxChecked  = false;
     bool busquedaVencimiento = false;
     bool mostrarFormularioCliente = false;
+    bool mostrarFormularioVehiculo = false;
     bool mostrarFormularioPagos = false; 
     bool mostrarDadoBaja = false; 
     bool cliente = true;
@@ -132,7 +142,19 @@
     private void btnNuevoCliente()
     {
         mostrarFormularioCliente = !mostrarFormularioCliente;
+        ActualizarBusqueda("a");
+        StateHasChanged();
+        ActualizarBusqueda("");
+        StateHasChanged();
 
+    }
+    private void btnNuevoVehiculo()
+    {
+        mostrarFormularioVehiculo = !mostrarFormularioVehiculo;
+        ActualizarBusqueda("a");
+        StateHasChanged();
+        ActualizarBusqueda("");
+        StateHasChanged();
     }
     private void btnNuevoPago()
     {

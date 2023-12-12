@@ -6,24 +6,21 @@
         <div class="cardDatos">
         <h4>Datos personales</h4>
         <EditForm Model="cliente">
-            <label>Seleccione el cliente</label>
-            <select @bind="cliente.ClienteID">
-               @foreach (var cliente in clientes)
-               {
-                   @if(cliente.Activo)
-                   {
-                        <option value="@cliente.ClienteID">@cliente.Nombre @cliente.Apellido</option>
-                   }
-               }
-            </select>
+            <InputText placeholder="Nombre de cliente" @bind-Value="@cliente.Nombre" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Apellido de cliente" @bind-Value="@cliente.Apellido" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Mail de cliente" @bind-Value="@cliente.Mail" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Ciudad del cliente" @bind-Value="@cliente.Ciudad" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Dirección del cliente" @bind-Value="@cliente.Direccion" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Teléfono de cliente" @bind-Value="@cliente.Telefono" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>   
         </EditForm>
         </div>
+    
         <div class="cardDatos">
             <h4>Datos del vehículo</h4>
             <EditForm Model="vehiculo">
                 <InputText placeholder="Patente del vehículo" @bind-Value="@vehiculo.Patente" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
                 <InputText placeholder="Modelo del vehículo" @bind-Value="@vehiculo.Marca" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
-                
+                <br />
                 <label>Año del vehículo</label>
                 <InputNumber @bind-Value="@vehiculo.Año" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
             </EditForm>
@@ -41,7 +38,7 @@
             </select>
             <label>Inicio de vigencia</label>
             <InputDate @bind-Value="@poliza.InicioVigencia" placeholder="Inicio de vigencia" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
-          
+            <br />
             <label>Fin de vigencia</label>
             <InputDate @bind-Value="@poliza.FinVigencia" placeholder="Fin de vigencia" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
             <label>Tipo de cobertura</label>
@@ -51,12 +48,11 @@
                    <option value="@cobertura.CoberturaID">@cobertura.Tipo</option>
                }
             </select> 
-            <br />
             <label>Número de póliza</label>
             <InputNumber @bind-Value="@poliza.NroPoliza" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
             <label>Valor asegurado</label>
             <InputNumber @bind-Value="@poliza.ValorAsegurado" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
-           
+            <br />
             <label>Valor de la cuota</label>
             
             <InputNumber @bind-Value="@poliza.ValorCuota" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
@@ -78,7 +74,6 @@
     public Poliza poliza = new();
     private List<Empresa> empresas = new();
     private List<Cobertura> coberturas = new();
-    private List<Cliente> clientes = new();
     public bool polizaActualizada;
 
     protected override async Task OnInitializedAsync()
@@ -86,9 +81,7 @@
         await base.OnInitializedAsync();
         await readEmpresas();
         await readCoberturas();
-        await readClientes();
 
-        cliente.ClienteID = clientes.FirstOrDefault().ClienteID;
         poliza.EmpresaID = empresas.FirstOrDefault().EmpresaID;
         poliza.CoberturaID = coberturas.FirstOrDefault().CoberturaID;
         poliza.InicioVigencia = DateTime.Now.Date;
@@ -102,16 +95,6 @@
             empresas = respuesta.Respuesta;
         }
     }
-
-    private async Task readClientes()
-    {
-        var respuesta = await http.Get<List<Cliente>>($"/Clientes");
-        if (!respuesta.Error)
-        {
-            clientes = respuesta.Respuesta;
-        }
-        //clientes = clientes.Where(c => c.Activo).ToList();
-    }
     private async Task readCoberturas()
     {
         var respuesta = await http.Get<List<Cobertura>>($"/Coberturas");
@@ -123,6 +106,13 @@
 
     private async void Agregar()
     {
+        var respuestaCliente = await http.Post<Cliente>("api/Cliente",cliente);
+        if (respuestaCliente.Error)
+        {
+            var body = respuestaCliente.HttpResponseMessage;
+        }
+        int idCliente = respuestaCliente.Respuesta.ClienteID;
+
         poliza.Actualizado = true;
         var respuestaPoliza = await http.Post<Poliza>("api/Polizas",poliza);
         if (respuestaPoliza.Error)
@@ -131,7 +121,7 @@
         }
         int idPoliza = respuestaPoliza.Respuesta.PolizaID;
 
-        vehiculo.ClienteID = cliente.ClienteID;
+        vehiculo.ClienteID = idCliente;
         vehiculo.PolizaID = idPoliza;
 
         var respuestaVehiculo = await http.Post<Vehiculo>("api/Vehiculos",vehiculo);
@@ -140,5 +130,7 @@
             var body = respuestaVehiculo.HttpResponseMessage;
         }
         await Cancelar.InvokeAsync(null);
+
     }
+
 }
