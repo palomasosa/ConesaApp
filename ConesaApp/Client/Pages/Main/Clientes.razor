@@ -130,7 +130,7 @@
         cerrarVehiculo = true;
         vehiculoSeleccionado = null;
         cerrarVehiculo = false;
-        if (Busqueda == "")
+        if (String.IsNullOrEmpty(Busqueda))
         {
             await readVehiculos();
         }
