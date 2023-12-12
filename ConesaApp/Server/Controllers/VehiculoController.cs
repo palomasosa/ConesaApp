@@ -77,7 +77,7 @@ namespace ConesaApp.Server.Controllers
         [HttpGet("/Vehiculos/Actualizados")]
         public async Task<ActionResult<List<Vehiculo>>> GetVehiculosActualizados()
         {
-            return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x => x.Poliza.Cobertura).Include(y => y.Cliente).Where(x=>x.Poliza.Actualizado == true).Where(x=>x.Cliente.Activo).ToListAsync();
+            return await _dbContext.Vehiculos.Include(x => x.Poliza).Include(x => x.Poliza.Empresa).Include(x => x.Poliza.Cobertura).Include(y => y.Cliente).Where(x=>x.Poliza.Actualizado == true).Where(x=>x.Cliente.Activo).ToListAsync();
         }
         #region
         [HttpGet("/Vehiculos/Busqueda")]
@@ -89,7 +89,7 @@ namespace ConesaApp.Server.Controllers
                 return int.TryParse(s, out temp);
             }
 
-            var vehiculos = _dbContext.Vehiculos.Include(v => v.Cliente).Include(v => v.Poliza).Include(v=>v.Poliza.Cobertura).ToList();
+            var vehiculos = _dbContext.Vehiculos.Include(v => v.Cliente).Include(v => v.Poliza).Include(x=>x.Poliza.Empresa).Include(v=>v.Poliza.Cobertura).ToList();
 
             if (IsInt(query))
             {
@@ -115,7 +115,7 @@ namespace ConesaApp.Server.Controllers
                 return int.TryParse(s, out temp);
             }
 
-            var vehiculos = _dbContext.Vehiculos.Include(v => v.Cliente).Include(v => v.Poliza).Include(v => v.Poliza.Cobertura).ToList();
+            var vehiculos = _dbContext.Vehiculos.Include(v => v.Cliente).Include(v => v.Poliza).Include(x => x.Poliza.Empresa).Include(v => v.Poliza.Cobertura).ToList();
 
             if (IsInt(query))
             {
@@ -130,33 +130,6 @@ namespace ConesaApp.Server.Controllers
             }
 
             vehiculos = vehiculos.Where(x => x.Poliza.Actualizado == true).ToList();
-
-            return vehiculos;
-        }
-        [HttpGet("/Vehiculos/Busqueda/Inactivos")]
-        public async Task<ActionResult<List<Vehiculo>>> GetVehiculosBusquedaInactivos(string query)
-        {
-            bool IsInt(string s)
-            {
-                int temp;
-                return int.TryParse(s, out temp);
-            }
-
-            var vehiculos = _dbContext.Vehiculos.Include(v => v.Cliente).Include(v => v.Poliza).Include(v => v.Poliza.Cobertura).ToList();
-
-            if (IsInt(query))
-            {
-                // Si el string se puede parsear a int, obtenga los vehículos que su año contenga este número.
-                vehiculos = vehiculos.Where(v => v.Año.HasValue && v.Año.Value.ToString().Contains(query)).ToList();
-            }
-            else
-            {
-                query = query.ToLower();
-                // Si no se pudo parsear a int, obtenga todos los vehículos que tengan una Patente, una Marca, un Poliza.TipoSeguro, un Cliente.Nombre o un Cliente.Telefono
-                vehiculos = vehiculos.Where(v => v.Patente.ToLower().Contains(query) || v.Marca.ToLower().Contains(query) || v.Poliza.Cobertura.Tipo.ToLower().Contains(query) || v.Cliente.Nombre.ToLower().Contains(query) || v.Cliente.Apellido.ToLower().Contains(query) || v.Cliente.Telefono.ToLower().Contains(query)).ToList();
-            }
-
-            vehiculos = vehiculos.Where(x => x.Cliente.Activo).ToList();
 
             return vehiculos;
         }
@@ -180,6 +153,7 @@ namespace ConesaApp.Server.Controllers
 
             var vehiculos = _dbContext.Vehiculos
                                     .Include(v => v.Poliza)
+                                    .Include(x => x.Poliza.Empresa)
                                     .Include(v=>v.Cliente)
                                     .Include(v=>v.Poliza.Cobertura)
                                     .Where(v => v.Poliza.FinVigencia >= fechaInicioDateTime &&
@@ -199,7 +173,7 @@ namespace ConesaApp.Server.Controllers
             {
                 _dbContext.Vehiculos.Add(vehiculo);
                 await _dbContext.SaveChangesAsync();
-                //Aca nos devuelve el cliente recién creado
+                //Aca nos devuelve el vehiculo recién creado
                 return vehiculo;
             }
             catch (Exception err)

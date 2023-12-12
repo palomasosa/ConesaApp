@@ -1,0 +1,38 @@
+﻿.card {
+    left: 260px;
+    z-index: 1;
+    padding: 25px;
+    position: absolute;
+    top: 55px;
+    width: 60%;
+    align-items: center;
+    height: 500px;
+    border-radius: 20px;
+    -webkit-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    -moz-box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+    box-shadow: 5px 6px 4px -1px rgba(0,0,0,0.31);
+}
+
+.datos {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+
+.btn {
+    border: none;
+    background: none;
+    color: #FFFFFF;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+

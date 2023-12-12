@@ -33,10 +33,6 @@
         <input  class="input-placeholder" type="password" placeholder="Contraseña" @bind="@contraseña" required>
     </div>
 
-    <div class="input-remember-container">
-        <input class="input-chkbx" type="checkbox">
-        <label  class="text-small">Recordar contraseña</label>
-    </div>
     <button class="submit-button" type="button" @onclick=log_in>Ingresar</button>
     @if(wrongUser)
     {

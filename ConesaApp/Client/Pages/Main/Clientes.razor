@@ -130,7 +130,23 @@
         cerrarVehiculo = true;
         vehiculoSeleccionado = null;
         cerrarVehiculo = false;
-        await readVehiculos();
+        if (Busqueda == "")
+        {
+            await readVehiculos();
+        }
+        else
+        {
+            var respuesta = await http.Get<List<Vehiculo>>($"/Vehiculos/Busqueda?query={Busqueda}");
+            if (!respuesta.Error)
+            {
+                vehiculos = respuesta.Respuesta;
+                foreach (Vehiculo vehiculo in vehiculos)
+                {
+                    Console.WriteLine(vehiculo);
+                }
+            }
+            StateHasChanged();
+        }
     }
 
     List<Vehiculo> vehiculos = new List<Vehiculo>();
@@ -191,18 +207,6 @@
                 }
             }
         }
-        //else if(MostrarDadoBaja && !(String.IsNullOrEmpty(Busqueda)))
-        //{
-        //    var respuesta = await http.Get<List<Vehiculo>>($"/Vehiculos/Busqueda/Inactivos?query={Busqueda}");
-        //    if (!respuesta.Error)
-        //    {
-        //        vehiculos = respuesta.Respuesta;
-        //        foreach (Vehiculo vehiculo in vehiculos)
-        //        {
-        //            Console.WriteLine(vehiculo);
-        //        }
-        //    }
-        //}
         else if(String.IsNullOrEmpty(Busqueda) && !MostrarDadoBaja)
         {
             var respuesta = await http.Get<List<Vehiculo>>($"/Vehiculos");
@@ -219,13 +223,5 @@
                     vehiculos = respuesta.Respuesta;
                 }
         }
-        //if (MostrarDadoBaja)
-        //{
-        //    var respuesta = await http.Get<List<Vehiculo>>("/Vehiculos/Inactivos");
-        //    if (!respuesta.Error)
-        //    {
-        //        vehiculos = respuesta.Respuesta;
-        //    }
-        //}
     }
 }

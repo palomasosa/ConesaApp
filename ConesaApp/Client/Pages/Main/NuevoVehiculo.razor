@@ -6,55 +6,69 @@
         <div class="cardDatos">
         <h4>Datos personales</h4>
         <EditForm Model="cliente">
-            <InputText @bind-Value="@cliente.Nombre" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-            <InputText @bind-Value="@cliente.Apellido" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-            <InputText @bind-Value="@cliente.Ciudad" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-            <InputText @bind-Value="@cliente.Mail" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-            <InputText @bind-Value="@cliente.Direccion" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-            <InputText @bind-Value="@cliente.Telefono" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>   
+            <InputText placeholder="Nombre de cliente" @bind-Value="@cliente.Nombre" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Apellido de cliente" @bind-Value="@cliente.Apellido" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Mail de cliente" @bind-Value="@cliente.Mail" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Ciudad del cliente" @bind-Value="@cliente.Ciudad" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Dirección del cliente" @bind-Value="@cliente.Direccion" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <InputText placeholder="Teléfono de cliente" @bind-Value="@cliente.Telefono" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>   
         </EditForm>
         </div>
     
         <div class="cardDatos">
             <h4>Datos del vehículo</h4>
             <EditForm Model="vehiculo">
-                <InputText @bind-Value="@vehiculo.Patente" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-                <InputText @bind-Value="@vehiculo.Marca" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-                <InputNumber @bind-Value="@vehiculo.Año" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
+                <InputText placeholder="Patente del vehículo" @bind-Value="@vehiculo.Patente" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+                <InputText placeholder="Modelo del vehículo" @bind-Value="@vehiculo.Marca" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+                <br />
+                <label>Año del vehículo</label>
+                <InputNumber @bind-Value="@vehiculo.Año" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
             </EditForm>
         </div>
     </div>
     <div class="cardDatos">
         <h4>Datos de la póliza</h4>
         <EditForm Model="poliza">
+            <label>Empresa del seguro</label>
             <select @bind="poliza.EmpresaID">
                @foreach (var empresa in empresas)
                {
                    <option value="@empresa.EmpresaID">@empresa.Nombre</option>
                }
             </select>
-            <InputNumber @bind-Value="@poliza.ValorAsegurado" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/>
-            <InputDate @bind-Value="@poliza.InicioVigencia" placeholder="Inicio de vigencia" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
-            <InputDate @bind-Value="@poliza.FinVigencia" placeholder="Fin de vigencia" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
+            <label>Inicio de vigencia</label>
+            <InputDate @bind-Value="@poliza.InicioVigencia" placeholder="Inicio de vigencia" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
+            <br />
+            <label>Fin de vigencia</label>
+            <InputDate @bind-Value="@poliza.FinVigencia" placeholder="Fin de vigencia" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
+            <label>Tipo de cobertura</label>
             <select @bind="poliza.CoberturaID">
                @foreach (var cobertura in coberturas)
                {
                    <option value="@cobertura.CoberturaID">@cobertura.Tipo</option>
                }
             </select> 
-            <InputNumber @bind-Value="@poliza.NroPoliza" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
-            <InputNumber @bind-Value="@poliza.ValorCuota" style="border: none; border-bottom: 1px solid black; margin-bottom: 10px"/> 
+            <label>Número de póliza</label>
+            <InputNumber @bind-Value="@poliza.NroPoliza" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
+            <label>Valor asegurado</label>
+            <InputNumber @bind-Value="@poliza.ValorAsegurado" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/>
+            <br />
+            <label>Valor de la cuota</label>
+            
+            <InputNumber @bind-Value="@poliza.ValorCuota" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
         </EditForm> 
     </div>
     <div class="botones">
-        <button class="btn"  style="background-color: #ACA4CC;">Cancelar</button>
-        <button class="btn" @onclick="Agregar" style="background-color: #5F658E;">Editar</button>
+        <button class="btn"  @onclick="Cancelar" style="background-color: #822F33">Cancelar</button>
+        <button class="btn" @onclick="Agregar" style="background-color: #1B8235">Guardar</button>
     </div>
     
  
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback Cancelar { get; set; }
     public Vehiculo vehiculo = new();
     public Cliente cliente = new();
     public Poliza poliza = new();
@@ -70,6 +84,8 @@
 
         poliza.EmpresaID = empresas.FirstOrDefault().EmpresaID;
         poliza.CoberturaID = coberturas.FirstOrDefault().CoberturaID;
+        poliza.InicioVigencia = DateTime.Now.Date;
+        poliza.FinVigencia = DateTime.Now.Date;
     }
     private async Task readEmpresas()
     {

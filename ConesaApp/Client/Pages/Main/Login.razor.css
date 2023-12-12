@@ -5,13 +5,12 @@
 }
 .login-card {
     width: 20.83vw;
-    height: 62vh;
+    height: 55vh;
     background-color: #222F7A;
     padding-top: 5.7vh;
     border-radius: 2.6vw;
     display: flex;
     flex-direction: column;
-    justify-content: baseline;
     align-items: center;
     gap: 2.95vh
 }
@@ -45,9 +44,12 @@
 .input-placeholder {
     background-color: transparent;
     border: none;
-    color: #ffffff;
+    color: #FFFFFF;
     font-size: 16px;
 }
+    .input-placeholder::placeholder {
+        color: #FFFFFF;
+    }
 
 
 

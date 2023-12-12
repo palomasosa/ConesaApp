@@ -1,0 +1,88 @@
+﻿@using ConesaApp.Client.Pages.Services
+@using ConesaApp.Database.Data.Entities
+@inject IHttpService http
+<div class="card">
+    <EditForm Model="pago">
+        <h4>Datos del pago</h4>
+        <label>Fecha del pago</label>
+        <InputDate @bind-Value="@pago.Fecha" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
+        <label>Monto del pago</label>
+        <InputNumber @bind-Value="@pago.Monto" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
+        <h4>Datos del cliente</h4>
+        <label>Nombre del cliente</label>
+        <select @bind="pago.ClienteID" @onselectionchange="readPolizasCliente">
+            @foreach (Cliente cliente in listaClientes)
+            {
+                <option value="@cliente.ClienteID">@cliente.Nombre @cliente.Apellido</option>
+            }
+        </select>
+        <label>Número de póliza</label>
+        <select @bind="pago.PolizaID">
+            @foreach (Poliza poliza in polizas)
+            {
+                <option value="@poliza.PolizaID">@poliza.NroPoliza</option>
+            }
+        </select>
+        <label>Patente del vehículo:</label>
+        
+    </EditForm> 
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback Cancelar { get; set; }
+    public Pago pago = new();
+    private List<Cliente> listaClientes = new();
+    private List<Poliza> polizas = new(); 
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await readClientes();
+        pago.ClienteID = listaClientes.FirstOrDefault().ClienteID;
+        await readPolizasCliente();
+        pago.PolizaID = polizas.FirstOrDefault().PolizaID;
+    }
+    private async Task readClientes()
+    {
+        var respuesta = await http.Get<List<Cliente>>($"/Clientes");
+        if (!respuesta.Error)
+        {
+            listaClientes = respuesta.Respuesta;
+        }
+    }
+    private async Task readPolizasCliente()
+    {
+        Console.WriteLine(pago.ClienteID);
+        var respuesta = await http.Get<List<Poliza>>($"/Poliza/IdCliente/{pago.ClienteID}");
+        if (!respuesta.Error)
+        {
+            polizas = respuesta.Respuesta;
+        }
+    }
+
+    //private async void Agregar()
+    //{
+    //    var respuestaCliente = await http.Post<Cliente>("api/Cliente",cliente);
+    //    if (respuestaCliente.Error)
+    //    {
+    //        var body = respuestaCliente.HttpResponseMessage;
+    //    }
+    //    int idCliente = respuestaCliente.Respuesta.ClienteID;
+    //    var respuestaPoliza = await http.Post<Poliza>("api/Polizas",poliza);
+    //    if (respuestaPoliza.Error)
+    //    {
+    //        var body = respuestaPoliza.HttpResponseMessage;
+    //    }
+    //    int idPoliza = respuestaPoliza.Respuesta.PolizaID;
+
+    //    vehiculo.ClienteID = idCliente;
+    //    vehiculo.PolizaID = idPoliza;
+
+    //    var respuestaVehiculo = await http.Post<Vehiculo>("api/Vehiculos",vehiculo);
+    //    if (respuestaVehiculo.Error)
+    //    {
+    //        var body = respuestaVehiculo.HttpResponseMessage;
+    //    }
+    //}
+}

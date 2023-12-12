@@ -21,16 +21,6 @@ namespace ConesaApp.Server.Controllers
         [HttpGet("/Polizas")]
         public async Task<ActionResult<List<Poliza>>> GetPolizas()
         {
-            //var polizas = await _dbContext.Polizas
-            //                    .ToListAsync();
-
-            //if (polizas == null)
-            //{
-            //    return NotFound($"No hay polizas para mostrar");
-
-            //}
-
-            //return polizas;
             return await _dbContext.Polizas.Include(x => x.Vehiculo).Include(x=>x.Empresa).Include(x=>x.Cobertura).ToListAsync();
         }
 
@@ -48,6 +38,21 @@ namespace ConesaApp.Server.Controllers
             }
 
             return Ok(poliza);
+        }
+        [HttpGet("/Poliza/IdCliente/{id:int}")]
+        public async Task<ActionResult<List<Poliza>>> GetPolizaIdCliente(int id)
+        {
+            if (_dbContext.Polizas == null)
+            {
+                return NotFound();
+            }
+            List<Poliza> polizas = await _dbContext.Polizas.Where(x => x.Vehiculo.ClienteID == id).ToListAsync();
+            if (polizas == null)
+            {
+                return NotFound($"No existe una poliza de ID= {id}");
+            }
+
+            return Ok(polizas);
         }
 
         [HttpPost]
