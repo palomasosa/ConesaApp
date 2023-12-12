@@ -33,3 +33,7 @@
     background-color: #5F658E;
     color: white;
 }
+
+.btnEliminar {
+    border:none;
+}

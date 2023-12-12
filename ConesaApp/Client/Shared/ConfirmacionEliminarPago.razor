@@ -1,0 +1,28 @@
+﻿@using ConesaApp.Database.Data.Entities
+@using ConesaApp.Client.Pages.Services
+@inject IHttpService http
+<div class="confirmacion">
+    <p>¿Está seguro que desea eliminar el pago?</p>
+    <div class="btns">
+        <button class="btn btn-light"  @onclick="Cerrar">Cancelar</button>
+        <button class="btn-baja" @onclick="eliminarPago">Eliminar pago</button>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter]
+    public Pago PagoEliminar { get; set; }
+    [Parameter]
+    public EventCallback Cerrar { get; set; }
+
+    private async Task eliminarPago()
+    {
+        var respuesta = await http.Delete($"api/Pago/{PagoEliminar.PagoID}");
+        if(respuesta.Error)
+        {
+            var body = "Error";
+        }
+        await Cerrar.InvokeAsync(null);
+    }
+}

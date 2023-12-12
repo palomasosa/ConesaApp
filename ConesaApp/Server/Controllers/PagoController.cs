@@ -21,11 +21,6 @@ namespace ConesaApp.Server.Controllers
         [HttpGet("/Pagos")]
         public async Task<ActionResult<List<Pago>>> GetPagos()
         {
-            //if (_dbContext.Pagos == null)
-            //{
-            //    return NotFound();
-            //}
-            //return await _dbContext.Pagos.ToListAsync();
             return await _dbContext.Pagos.Include(x => x.Poliza).Include(p=>p.Poliza.Vehiculo).Include(y => y.Cliente).Include(z=>z.Usuario).Include(v=>v.MetodoPago).ToListAsync();
         }
 
@@ -69,14 +64,14 @@ namespace ConesaApp.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> PostPago(Pago pago)
+        public async Task<ActionResult<Pago>> PostPago(Pago pago)
         {
             try
             {
                 _dbContext.Pagos.Add(pago);
                 await _dbContext.SaveChangesAsync();
                 //Aca nos devuelve el cliente recién creado
-                return pago.PagoID;
+                return pago;
             }
             catch (Exception err)
             {
@@ -85,28 +80,12 @@ namespace ConesaApp.Server.Controllers
             }
 
         }
-//public ActionResult Put(int id, [FromBody] Huesped huesped)
         [HttpPut("{id}")]
         
         public async Task<ActionResult<Pago>> PutPago(int id, Pago pago)
         {
-            //if (id != pago.clienteID)
-            //{
-            //    return BadRequest();
-            //}
-            //_dbContext.Pagos.Entry(pago).State = EntityState.Modified;
-            //try
-            //{
-            //    await _dbContext.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-
-            //    throw;
-            //}
-            //return Ok($"Se ha modificado el pago de ID {pago.pagoID}");
             var pagoSolicitado = _dbContext.Pagos
-   .Where(e => e.PagoID == id).FirstOrDefault();
+                .Where(e => e.PagoID == id).FirstOrDefault();
 
             if (pagoSolicitado == null)
             {

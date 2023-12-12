@@ -16,6 +16,7 @@
                 <option value="@cliente.ClienteID">@cliente.Nombre @cliente.Apellido</option>
             }
         </select>
+        <h4>Datos de la póliza</h4>
         <label>Número de póliza</label>
         <select @bind="pago.PolizaID" >
             @foreach (Poliza poliza in polizas)
@@ -32,11 +33,12 @@
         </select>
         
     </EditForm> 
-</div>
-<div class="botones">
+    <div class="botones">
         <button class="btn"  @onclick="Cancelar" style="background-color: #822F33">Cancelar</button>
         <button class="btn" @onclick="Agregar" style="background-color: #1B8235">Guardar</button>
+    </div>
 </div>
+
 
 @code {
     [Parameter]
@@ -64,6 +66,7 @@
         {
             listaClientes = respuesta.Respuesta;
         }
+        listaClientes = listaClientes.Where(x => x.Activo).ToList();
     }
     private async Task readPolizasCliente()
     {

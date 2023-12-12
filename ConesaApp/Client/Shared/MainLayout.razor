@@ -159,6 +159,10 @@
     private void btnNuevoPago()
     {
         mostrarFormularioPagos = !mostrarFormularioPagos;
+        ActualizarBusqueda("a");
+        StateHasChanged();
+        ActualizarBusqueda("");
+        StateHasChanged();
     }
     void btnOnclickCliente()
     {
