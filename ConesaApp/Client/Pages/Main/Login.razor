@@ -64,7 +64,7 @@
         {
             AuthenticationService.mail = this.mail;
             AuthenticationService.password = this.contraseña;
-            AuthenticationService.usuarioID = body.UsuarioID;
+            AuthenticationService.usuarioID = res.Respuesta.UsuarioID;
             Navigation.NavigateTo("/inicio");
         }
         else

@@ -10,22 +10,32 @@
         <InputNumber @bind-Value="@pago.Monto" style="border: none; border-bottom: 1px solid #b7abab; margin-bottom: 10px"/> 
         <h4>Datos del cliente</h4>
         <label>Nombre del cliente</label>
-        <select @bind="pago.ClienteID" @onselectionchange="readPolizasCliente">
+        <select @bind="pago.ClienteID" @onfocusout="readPolizasCliente">
             @foreach (Cliente cliente in listaClientes)
             {
                 <option value="@cliente.ClienteID">@cliente.Nombre @cliente.Apellido</option>
             }
         </select>
         <label>Número de póliza</label>
-        <select @bind="pago.PolizaID">
+        <select @bind="pago.PolizaID" >
             @foreach (Poliza poliza in polizas)
             {
                 <option value="@poliza.PolizaID">@poliza.NroPoliza</option>
             }
         </select>
-        <label>Patente del vehículo:</label>
+        <label>Método de pago</label>
+        <select @bind="pago.MetodoPagoID" >
+            @foreach (MetodoPago metodo in metodosDePago)
+            {
+                <option value="@metodo.MetodoPagoID">@metodo.Metodo</option>
+            }
+        </select>
         
     </EditForm> 
+</div>
+<div class="botones">
+        <button class="btn"  @onclick="Cancelar" style="background-color: #822F33">Cancelar</button>
+        <button class="btn" @onclick="Agregar" style="background-color: #1B8235">Guardar</button>
 </div>
 
 @code {
@@ -33,7 +43,8 @@
     public EventCallback Cancelar { get; set; }
     public Pago pago = new();
     private List<Cliente> listaClientes = new();
-    private List<Poliza> polizas = new(); 
+    private List<Poliza> polizas = new();
+    private List<MetodoPago> metodosDePago = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -42,6 +53,9 @@
         pago.ClienteID = listaClientes.FirstOrDefault().ClienteID;
         await readPolizasCliente();
         pago.PolizaID = polizas.FirstOrDefault().PolizaID;
+        await readMetodosDePago();
+        pago.MetodoPagoID = metodosDePago.FirstOrDefault().MetodoPagoID;
+        pago.UsuarioID = AuthenticationService.usuarioID;
     }
     private async Task readClientes()
     {
@@ -53,36 +67,30 @@
     }
     private async Task readPolizasCliente()
     {
-        Console.WriteLine(pago.ClienteID);
         var respuesta = await http.Get<List<Poliza>>($"/Poliza/IdCliente/{pago.ClienteID}");
         if (!respuesta.Error)
         {
             polizas = respuesta.Respuesta;
         }
+        StateHasChanged();
     }
 
-    //private async void Agregar()
-    //{
-    //    var respuestaCliente = await http.Post<Cliente>("api/Cliente",cliente);
-    //    if (respuestaCliente.Error)
-    //    {
-    //        var body = respuestaCliente.HttpResponseMessage;
-    //    }
-    //    int idCliente = respuestaCliente.Respuesta.ClienteID;
-    //    var respuestaPoliza = await http.Post<Poliza>("api/Polizas",poliza);
-    //    if (respuestaPoliza.Error)
-    //    {
-    //        var body = respuestaPoliza.HttpResponseMessage;
-    //    }
-    //    int idPoliza = respuestaPoliza.Respuesta.PolizaID;
+    private async Task readMetodosDePago()
+    {
+        var respuesta = await http.Get<List<MetodoPago>>($"/MetodoPago");
+        if (!respuesta.Error)
+        {
+            metodosDePago = respuesta.Respuesta;
+        }
+    }
 
-    //    vehiculo.ClienteID = idCliente;
-    //    vehiculo.PolizaID = idPoliza;
-
-    //    var respuestaVehiculo = await http.Post<Vehiculo>("api/Vehiculos",vehiculo);
-    //    if (respuestaVehiculo.Error)
-    //    {
-    //        var body = respuestaVehiculo.HttpResponseMessage;
-    //    }
-    //}
+    private async void Agregar()
+    {
+        var respuestaPago = await http.Post<Pago>("api/Pago",pago);
+        if (respuestaPago.Error)
+        {
+            var body = respuestaPago.HttpResponseMessage;
+        }
+        await Cancelar.InvokeAsync(null);
+    }
 }
